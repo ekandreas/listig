@@ -12,11 +12,6 @@
             "email": "andreas@elseif.se"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "EkAndreas\\Listig\\": "src/"
-        }
-    },
     "require": {
         "php" : "^7.0"
     }
