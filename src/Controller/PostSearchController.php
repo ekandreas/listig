@@ -18,20 +18,16 @@ class PostSearchController implements RouteInterface
 
         $args = [
             'posts_per_page' => $params['postsPerPage'],
-            'page' => 1,
+            'paged' => $params['page'],
             'orderby' => 'date',
             'order' => 'ASC',
         ];
 
         if ($params['posttype']) $args['post_type'] = $params['posttype'];
         if ($params['author']) $args['author'] = $params['author'];
-        if ($params['search']) $args['s'] = '%' . $params['search'] . '%';
+        if ($params['search']) $args['s'] = $params['search'];
 
         $query = new \WP_Query($args);
-
-        //while ( $query->have_posts() ) {
-        //    $query->the_post();
-        //}
 
         wp_reset_postdata();
 
