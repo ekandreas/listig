@@ -6,16 +6,18 @@
                     <i class="fa fa-gear"></i>
                 </a>
             </p>
-            <a class="panel-block">
-                { Drag your post here! }
-            </a>
-            <div class="panel-block">
+            <draggable :list="posts"
+                       :options="{group:'posts',animation:350}" @start="drag=true" @add="added">
+                <a class="panel-block" v-for="post in posts" :list="posts" :class="{ 'is-active': post.ID==currentPostId }">
+                    {{ post.post_title}}
+                </a>
+            </draggable>
+            <div class="panel-block" v-if="dirty">
                 <div class="control">
                     <button class="button is-primary is-outlined is-fullwidth">Save</button>
                 </div>
             </div>
         </nav>
-    </div>
 </template>
 
 <script>
@@ -23,6 +25,11 @@
         props: ['list'],
         data: function () {
             return {
+                currentPostId: 0,
+                posts: [
+                    {ID:0,post_title:'{ Empty! Drag a post here... }'}
+                ],
+                dirty: false
             }
         },
         created: function () {
@@ -34,6 +41,20 @@
         methods: {
             edit: function (list) {
                 window.eventBus.$emit('list-edit', list);
+            },
+            added: function(e) {
+                let self = this;
+                self.dirty=true;
+
+                self.currentPostId = self.posts[e.newIndex].ID;
+
+                for(let i = 0; i < self.posts.length; i++) {
+                    if(self.posts[i].ID == 0) {
+                        self.posts.splice(i, 1);
+                        break;
+                    }
+                }
+
             }
         }
     };

@@ -1,10 +1,12 @@
 <template>
-    <div>
-        <list-item v-for="list in listings" :list="list"></list-item>
-    </div>
+    <draggable :list="listings"
+               :options="{group:'listings',animation:350}" @start="drag=true" @end="drag=false">
+            <list-item v-for="list in listings" :list="list" :key="list.id"></list-item>
+    </draggable>
 </template>
 
 <script>
+
     module.exports = {
         data: function () {
             return {

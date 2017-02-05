@@ -1,71 +1,77 @@
 <template>
-        <nav class="panel">
-            <p class="panel-heading">
-                Post Search
-            </p>
-            <div class="panel-block">
-                <div class="columns">
-                    <div class="column is-4">
-                        <div class="control has-icon">
-                            <input class="input is-small" type="text" placeholder="Search" @keyup="searchBounce" v-model="form.search">
-                            <span class="icon is-small">
+    <nav class="panel">
+        <p class="panel-heading">
+            Post Search
+        </p>
+        <div class="panel-block">
+            <div class="columns">
+                <div class="column is-4">
+                    <div class="control has-icon">
+                        <input class="input is-small" type="text" placeholder="Search" @keyup="searchBounce"
+                               v-model="form.search">
+                        <span class="icon is-small">
                                 <i class="fa fa-search"></i>
                             </span>
-                        </div>
                     </div>
-                    <div class="column is-4">
-                        <div class="control">
-                            <p class="control">
+                </div>
+                <div class="column is-4">
+                    <div class="control">
+                        <p class="control">
                                 <span class="select is-small">
                                     <select v-model="form.author" @change="search">
                                       <option value="0">-- no author --</option>
                                       <option v-for="author in authors" :value="author.data.ID">{{ author.data.display_name }}</option>
                                     </select>
                                 </span>
-                            </p>
-                        </div>
+                        </p>
                     </div>
-                    <div class="column is-4">
-                        <div class="control">
-                            <p class="control">
+                </div>
+                <div class="column is-4">
+                    <div class="control">
+                        <p class="control">
                                 <span class="select is-small">
                                     <select v-model="form.posttype" @change="search">
                                       <option value="0">-- no posttype --</option>
-                                      <option v-for="posttype in posttypes" :value="posttype.name">{{ posttype.label }}</option>
+                                      <option v-for="posttype in posttypes"
+                                              :value="posttype.name">{{ posttype.label }}</option>
                                     </select>
                                 </span>
-                            </p>
-                        </div>
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="panel-block" v-for="post in posts" :class="{ 'is-active': post.ID==currentPostId }" @click="currentPostId = post.ID">
-                <span v-if="post.ID!=currentPostId">
-                    {{ post.post_title }}
-                </span>
-                <span class="selected-post" v-if="post.ID==currentPostId">
+        </div>
+        <draggable class="" :list="posts"
+                   :options="{ group:'posts', animation:350, 'pull':'clone', 'put':false }">
+
+            <div class="panel-block" v-for="post in posts" :class="{ 'is-active': post.ID==currentPostId }" :key="post.ID"
+                 @click="currentPostId = post.ID">
+                <span class="{ 'selected-post' : post.ID==currentPost}">
                     {{ post.post_title }}
                 </span>
             </div>
-            <div class="panel-block">
 
-                <a class="button button-page-previous is-outlined is-small" v-if="form.page > 1" @click="previous">
+        </draggable>
+
+        <div class="panel-block">
+
+            <a class="button button-page-previous is-outlined is-small" v-if="form.page > 1" @click="previous">
                     <span class="icon is-small">
                         <i class="fa fa-angle-left"></i>
                     </span>
-                    Previous
-                </a>&nbsp;
+                Previous
+            </a>&nbsp;
 
-                <span class="tag is-primary">{{ form.page }} / {{ maxPages }}</span>&nbsp;
+            <span class="tag is-primary">{{ form.page }} / {{ maxPages }}</span>&nbsp;
 
-                <a class="button button-page-next is-outlined is-small" v-if="form.page<maxPages" @click="next">
-                    Next
-                    <span class="icon is-small">
+            <a class="button button-page-next is-outlined is-small" v-if="form.page<maxPages" @click="next">
+                Next
+                <span class="icon is-small">
                         <i class="fa fa-angle-right"></i>
                     </span>
-                </a>&nbsp;
+            </a>&nbsp;
 
-                <p class="control">
+            <p class="control">
                     <span class="select is-small pull-right">
                         <select v-model="form.postsPerPage" @change="changePostsPerPage">
                             <option value="5">5</option>
@@ -74,10 +80,10 @@
                             <option value="100">100</option>
                         </select>
                     </span>
-                </p>
+            </p>
 
-            </div>
-        </nav>
+        </div>
+    </nav>
 </template>
 
 <script>
@@ -114,13 +120,13 @@
             }
         },
         methods: {
-            search: function(noReset) {
+            search: function (noReset) {
                 let self = this;
-                self.form.page=1;
-                self.maxPages=1;
+                self.form.page = 1;
+                self.maxPages = 1;
                 self.queryForm();
             },
-            queryForm: function() {
+            queryForm: function () {
                 let self = this;
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.post(listig.restUrl + '/post-search', self.form)
@@ -130,15 +136,15 @@
                         self.form.page = response.data.query.paged;
                     });
             },
-            searchBounce: function() {
+            searchBounce: function () {
                 let self = this;
 
                 clearTimeout(self.searchTimer);
-                this.searchTimer = setTimeout(function(){
+                this.searchTimer = setTimeout(function () {
                     self.search();
                 }.bind(this), 300);
             },
-            changePostsPerPage: function() {
+            changePostsPerPage: function () {
                 let self = this;
 
                 let fields = [
@@ -152,12 +158,12 @@
                         self.search();
                     });
             },
-            next: function() {
+            next: function () {
                 let self = this;
                 self.form.page++;
                 self.queryForm();
             },
-            previous: function() {
+            previous: function () {
                 let self = this;
                 self.form.page--;
                 self.queryForm();
@@ -168,16 +174,19 @@
 
 <style>
     .post-label {
-        float:right;
+        float: right;
     }
+
     .selected-post {
         color: #333;
         font-weight: bolder;
     }
+
     .button-page-next span i {
         margin-top: 5px;
         margin-left: 10px;
     }
+
     .button-page-previous span i {
         margin-top: 5px;
         margin-right: 10px;

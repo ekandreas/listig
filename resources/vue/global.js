@@ -15,8 +15,11 @@ window.ListigListings = require('./../../resources/vue/components/listings.vue')
 window.ListigTopMenu = require('./../../resources/vue/components/top-menu.vue');
 window.ListigMainPage = require('./../../resources/vue/pages/main-page.vue');
 
+window.draggable = require('vuedraggable');
+
 window.eventBus = new Vue();
 
+Vue.component('draggable', window.draggable);
 Vue.component('post-edit', window.ListigPostEdit);
 Vue.component('list-edit', window.ListigListEdit);
 Vue.component('list-item', window.ListigListItem);
