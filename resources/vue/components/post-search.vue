@@ -57,6 +57,18 @@
                 <button class="button is-outlined">
                     3
                 </button>
+
+                <p class="control">
+                    <span class="select is-small pull-right">
+                        <select v-model="form.postsPerPage" @change="changePostsPerPage">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="100">100</option>
+                        </select>
+                    </span>
+                </p>
+
             </div>
         </nav>
 </template>
@@ -86,9 +98,10 @@
                 form: {
                     author: 0,
                     search: '',
-                    posttype: 0
+                    posttype: 0,
+                    postsPerPage: parseInt(listig.userSettings[0].searchPostsPerPage)
                 },
-                lang: listig.lang,
+                lang: listig.lang
             }
         },
         methods: {
@@ -108,6 +121,20 @@
                 this.searchTimer = setTimeout(function(){
                     self.search();
                 }.bind(this), 300);
+            },
+            changePostsPerPage: function() {
+                let self = this;
+
+                let fields = [
+                    {
+                        'searchPostsPerPage': self.form.postsPerPage
+                    }
+                ];
+                axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
+                axios.post(listig.restUrl + '/user-setting', fields)
+                    .then(function (response) {
+                        self.search();
+                    });
             }
         }
     };

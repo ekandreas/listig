@@ -2,6 +2,7 @@
 namespace EkAndreas\Listig\Setup;
 
 use EkAndreas\Listig\Menu\AdminMenu;
+use EkAndreas\Listig\Model\UserSettingModel;
 use EkAndreas\Listig\Route\Base;
 
 class Script
@@ -18,6 +19,7 @@ class Script
             'lang' => \EkAndreas\Listig\Language\Script::translations(),
             'nonce' => wp_create_nonce('wp_rest'),
             'restUrl' => Base::url,
+            'userSettings' => UserSettingModel::all(),
         ];
 
         wp_register_script('listig_js', plugins_url('listig/assets/js/app.js'), [], null, true);
