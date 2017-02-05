@@ -1,0 +1,19 @@
+{
+    "name": "ekandreas/listig",
+    "version": "0.0.1",
+    "description": "List Manager",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andreas Ek",
+            "email": "andreas@elseif.se"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "EkAndreas\\Listig\\": "src/"
+        }
+    },
+    "require": {}
+}

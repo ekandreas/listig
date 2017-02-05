@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Listig\n"
+"POT-Creation-Date: 2017-02-04 17:10+0100\n"
+"PO-Revision-Date: 2017-02-04 17:11+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: listig.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: src/Language/Script.php:9 src/Menu/AdminMenu.php:28
+#: src/Menu/AdminMenu.php:29
+msgid "Settings"
+msgstr "Inställningar"
+
+#: src/Language/Script.php:10
+msgid "New list"
+msgstr "Ny lista"
+
+#: src/Language/Script.php:11
+msgid "Edit list properties"
+msgstr "Ändra listans egenskaper"
+
+#: src/Language/Script.php:12
+msgid "Save"
+msgstr "Spara"
+
+#: src/Language/Script.php:13
+msgid "Cancel"
+msgstr "Ångra"
+
+#: src/Language/Script.php:14
+msgid "Name"
+msgstr "Namn"
+
+#: src/Language/Script.php:15
+msgid "Please, enter a name!"
+msgstr "Vänligen ange ett namn!"
+
+#: src/Language/Script.php:16
+msgid "Description"
+msgstr "Beskrivning"
+
+#: src/Language/Script.php:17
+msgid "Tell a story about this list and it´s purpose!"
+msgstr "Berätta mer om listan och dess syfte..."
+
+#: src/Language/Script.php:18
+msgid "Private (only you can see and edit this list)"
+msgstr "Privat (bara du kan se och ändra denna lista)"
+
+#: src/Language/Script.php:19
+msgid "Delete list"
+msgstr "Ta bort listan"
+
+#. Plugin Name of the plugin/theme
+msgid "Listig"
+msgstr "Listig"
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/ekandreas/listig/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "List Manager"
+msgstr "Listhanterare"
+
+#. Author of the plugin/theme
+msgid "Andreas Ek"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.elseif.se/"
+msgstr ""
+
+#~ msgid "Edit list"
+#~ msgstr "Ändra lista"
