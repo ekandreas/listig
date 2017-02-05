@@ -114,9 +114,14 @@
             }
         },
         methods: {
-            search: function() {
+            search: function(noReset) {
                 let self = this;
-
+                self.form.page=1;
+                self.maxPages=1;
+                self.queryForm();
+            },
+            queryForm: function() {
+                let self = this;
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.post(listig.restUrl + '/post-search', self.form)
                     .then(function (response) {
@@ -150,12 +155,12 @@
             next: function() {
                 let self = this;
                 self.form.page++;
-                self.search();
+                self.queryForm();
             },
             previous: function() {
                 let self = this;
                 self.form.page--;
-                self.search();
+                self.queryForm();
             }
         }
     };
