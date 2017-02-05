@@ -1,7 +1,7 @@
 {
     "name": "ekandreas/listig",
     "version": "0.0.1",
-    "description": "List Manager",
+    "description": "List Manager as a WordPress plugin",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
