@@ -29,11 +29,7 @@
 
 <script>
     module.exports = {
-        component: ListigTopMenu,
-        props: ['title'],
-        components: {
-            'listEdit': ListigListEdit
-        }
+        props: ['title']
     };
 </script>
 
