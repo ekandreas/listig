@@ -12,8 +12,11 @@ class Script
         if (!in_array($hook, AdminMenu::pages())) {
             return;
         }
+
+        $manifest = json_decode(file_get_contents(__DIR__.'/../../mix-manifest.json'), true);
+
         wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-        wp_enqueue_style('listig_css', plugins_url('listig/assets/css/app.css'));
+        wp_enqueue_style('listig_css', plugins_url('listig/'.$manifest['assets/css/app.css']));
 
         $data = [
             'lang' => \EkAndreas\Listig\Language\Script::translations(),
@@ -22,7 +25,7 @@ class Script
             'userSettings' => UserSettingModel::all(),
         ];
 
-        wp_register_script('listig_js', plugins_url('listig/assets/js/app.js'), [], null, true);
+        wp_register_script('listig_js', plugins_url('listig/'.$manifest['assets/js/app.js']), [], null, true);
         wp_localize_script('listig_js', 'listig', $data);
         wp_enqueue_script('listig_js');
 
