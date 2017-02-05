@@ -48,15 +48,22 @@
                 </span>
             </div>
             <div class="panel-block">
-                <button class="button is-outlined">
-                    1
-                </button>&nbsp;
-                <button class="button is-outlined">
-                    2
-                </button>&nbsp;
-                <button class="button is-outlined">
-                    3
-                </button>
+
+                <a class="button button-page-previous is-outlined is-small" v-if="form.page > 1" @click="previous">
+                    <span class="icon is-small">
+                        <i class="fa fa-angle-left"></i>
+                    </span>
+                    Previous
+                </a>&nbsp;
+
+                <span class="tag is-primary">{{ form.page }} / {{ maxPages }}</span>&nbsp;
+
+                <a class="button button-page-next is-outlined is-small" v-if="form.page<maxPages" @click="next">
+                    Next
+                    <span class="icon is-small">
+                        <i class="fa fa-angle-right"></i>
+                    </span>
+                </a>&nbsp;
 
                 <p class="control">
                     <span class="select is-small pull-right">
@@ -95,7 +102,9 @@
                 authors: [],
                 posttypes: [],
                 posts: [],
+                maxPages: 1,
                 form: {
+                    page: 1,
                     author: 0,
                     search: '',
                     posttype: 0,
@@ -112,6 +121,8 @@
                 axios.post(listig.restUrl + '/post-search', self.form)
                     .then(function (response) {
                         self.posts = response.data.posts;
+                        self.maxPages = response.data.max_num_pages;
+                        self.form.page = response.data.query.paged;
                     });
             },
             searchBounce: function() {
@@ -135,6 +146,16 @@
                     .then(function (response) {
                         self.search();
                     });
+            },
+            next: function() {
+                let self = this;
+                self.form.page++;
+                self.search();
+            },
+            previous: function() {
+                let self = this;
+                self.form.page--;
+                self.search();
             }
         }
     };
@@ -147,5 +168,13 @@
     .selected-post {
         color: #333;
         font-weight: bolder;
+    }
+    .button-page-next span i {
+        margin-top: 5px;
+        margin-left: 10px;
+    }
+    .button-page-previous span i {
+        margin-top: 5px;
+        margin-right: 10px;
     }
 </style>
