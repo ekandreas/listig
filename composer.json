@@ -2,6 +2,8 @@
     "name": "ekandreas/listig",
     "version": "0.0.1",
     "description": "List Manager as a WordPress plugin",
+    "keywords": ["wordpress","wordpress-plugin","list-manager","query","structures","tool","editorial"],
+    "homepage": "https://www.elseif.se",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
@@ -15,5 +17,7 @@
             "EkAndreas\\Listig\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "php" : "^7.0"
+    }
 }
