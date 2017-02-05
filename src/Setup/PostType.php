@@ -11,11 +11,18 @@ class PostType
         ];
         \register_post_type('listig', [
             'labels' => $labels,
-            'public'             => true,
-            'publicly_queryable' => true,
-            'show_ui'            => true,
-            'show_in_menu'       => true,
-            'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'revisions' )
+            'public'             => false,
+            'publicly_queryable' => false,
+            'show_ui'            => LISTIG_POSTTYPE_VISIBLE,
+            'show_in_menu'       => LISTIG_POSTTYPE_VISIBLE,
+            'supports'           => [
+                                        'title',
+                                        'editor',
+                                        'author',
+                                        'thumbnail',
+                                        'excerpt',
+                                        'revisions'
+                                    ],
         ]);
     }
 }

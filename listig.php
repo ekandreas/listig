@@ -12,22 +12,14 @@ Text Domain: listig
 Domain Path: /languages
 */
 
+/**
+ * Namespace autoload outside of Composer to reach WordPress plugin compability without Composer
+ */
 require_once 'autoload.php';
 
-add_action( 'admin_init', function(){
-    load_plugin_textdomain( 'listig', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-});
+/**
+ * Global registrations, functions and filters
+ */
+require_once 'globals/required.php';
 
-add_action('init', function() {
-   EkAndreas\Listig\Setup\PostType::register();
-});
 
-add_action( 'admin_menu', 'EkAndreas\Listig\Menu\AdminMenu::register' );
-add_action( 'admin_enqueue_scripts', 'EkAndreas\Listig\Setup\Script::register' );
-
-new \EkAndreas\Listig\Route\RouteService([
-    EkAndreas\Listig\Controller\ListingController::class,
-    EkAndreas\Listig\Controller\AuthorController::class,
-    EkAndreas\Listig\Controller\PostTypeController::class,
-    EkAndreas\Listig\Controller\PostSearchController::class,
-]);
