@@ -17,7 +17,7 @@ class PostSearchController implements RouteInterface
         $params = $request->get_json_params();
 
         $args = [
-            'posts_per_page' => 20,
+            'posts_per_page' => $params['postsPerPage'],
             'page' => 1,
             'orderby' => 'date',
             'order' => 'ASC',
