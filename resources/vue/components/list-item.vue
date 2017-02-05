@@ -6,9 +6,14 @@
                     <i class="fa fa-gear"></i>
                 </a>
             </p>
-            <draggable :list="posts"
+            <draggable :class="{ 'panel-block initial-area' : posts.length==0 }" :list="posts"
                        :options="{group:'posts',animation:350}" @start="drag=true" @add="added">
-                <a class="panel-block" v-for="post in posts" :list="posts" :class="{ 'is-active': post.ID==currentPostId }">
+
+                <a class="panel-block"
+                   v-for="post in posts"
+                   :list="posts"
+                   @click="currentPostId = post.ID"
+                   :class="{ 'is-active': post.ID==currentPostId }">
                     {{ post.post_title}}
                 </a>
             </draggable>
@@ -26,9 +31,7 @@
         data: function () {
             return {
                 currentPostId: 0,
-                posts: [
-                    {ID:0,post_title:'{ Empty! Drag a post here... }'}
-                ],
+                posts: [],
                 dirty: false
             }
         },
@@ -47,14 +50,6 @@
                 self.dirty=true;
 
                 self.currentPostId = self.posts[e.newIndex].ID;
-
-                for(let i = 0; i < self.posts.length; i++) {
-                    if(self.posts[i].ID == 0) {
-                        self.posts.splice(i, 1);
-                        break;
-                    }
-                }
-
             }
         }
     };
@@ -63,5 +58,8 @@
 <style>
     .gear-icon {
         color: #999;
+    }
+    .initial-area {
+        min-height: 40px;
     }
 </style>

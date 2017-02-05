@@ -41,8 +41,8 @@
                 </div>
             </div>
         </div>
-        <draggable class="" :list="posts"
-                   :options="{ group:'posts', animation:350, 'pull':'clone', 'put':false }">
+        <draggable class="draggable-container" :list="posts"
+                   :options="{ group:'posts', animation:350, pull:'clone', put:false }">
 
             <div class="panel-block" v-for="post in posts" :class="{ 'is-active': post.ID==currentPostId }" :key="post.ID"
                  @click="currentPostId = post.ID">
@@ -173,6 +173,10 @@
 </script>
 
 <style>
+    .draggable-container {
+        min-height: 20px;
+    }
+
     .post-label {
         float: right;
     }
