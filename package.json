@@ -1,6 +1,6 @@
 {
   "name": "listig",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "List Manager plugin for WordPress",
   "main": "index.js",
   "scripts": {
