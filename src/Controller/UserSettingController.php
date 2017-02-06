@@ -23,8 +23,6 @@ class UserSettingController implements RouteInterface
     {
         $setting = UserSettingModel::all();
 
-        return $request->get_json_params();
-
         foreach ($request->get_json_params() as $key => $value) {
             $setting->{$key} = $value;
         }

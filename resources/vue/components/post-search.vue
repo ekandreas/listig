@@ -114,7 +114,7 @@
                     author: 0,
                     search: '',
                     posttype: 0,
-                    postsPerPage: parseInt(listig.userSettings[0].searchPostsPerPage)
+                    postsPerPage: listig.userSettings[0] ? parseInt(listig.userSettings[0].searchPostsPerPage) : 10
                 },
                 lang: listig.lang
             }
