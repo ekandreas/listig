@@ -2,7 +2,7 @@
         <nav class="panel">
             <p class="panel-heading">
                 {{ list.name }}
-                <a class="icon pull-right gear-icon" @click="edit(list)">
+                <a class="icon pull-right gear-icon" @click="listEdit(list)">
                     <i class="fa fa-gear"></i>
                 </a>
             </p>
@@ -12,14 +12,14 @@
                 <a class="panel-block"
                    v-for="post in posts"
                    :list="posts"
-                   @click="currentPostId = post.ID"
+                   @click="postEdit(post)"
                    :class="{ 'is-active': post.ID==currentPostId }">
-                    {{ post.post_title}}
+                    {{ post.headline}}
                 </a>
             </draggable>
             <div class="panel-block" v-if="dirty">
                 <div class="control">
-                    <button class="button is-primary is-outlined is-fullwidth">Save</button>
+                    <button class="button is-primary">Save</button>
                 </div>
             </div>
         </nav>
@@ -42,7 +42,7 @@
             let self = this;
         },
         methods: {
-            edit: function (list) {
+            listEdit: function (list) {
                 window.eventBus.$emit('list-edit', list);
             },
             added: function(e) {
@@ -50,6 +50,11 @@
                 self.dirty=true;
 
                 self.currentPostId = self.posts[e.newIndex].ID;
+            },
+            postEdit(post) {
+                let self = this;
+                self.currentPostId = post.ID
+                window.eventBus.$emit('post-edit', post);
             }
         }
     };

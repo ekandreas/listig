@@ -47,7 +47,7 @@
             <div class="panel-block" v-for="post in posts" :class="{ 'is-active': post.ID==currentPostId }" :key="post.ID"
                  @click="currentPostId = post.ID">
                 <span class="{ 'selected-post' : post.ID==currentPost}">
-                    {{ post.post_title }}
+                    {{ post.headline }}
                 </span>
             </div>
 
@@ -132,8 +132,8 @@
                 axios.post(listig.restUrl + '/post-search', self.form)
                     .then(function (response) {
                         self.posts = response.data.posts;
-                        self.maxPages = response.data.max_num_pages;
-                        self.form.page = response.data.query.paged;
+                        self.maxPages = response.data.query.max_num_pages;
+                        self.form.page = response.data.query.query.paged;
                     });
             },
             searchBounce: function () {

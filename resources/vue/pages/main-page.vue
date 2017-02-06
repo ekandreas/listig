@@ -16,7 +16,6 @@
             </div>
 
             <div class="column">
-                <post-preview></post-preview>
                 <post-edit></post-edit>
             </div>
 
