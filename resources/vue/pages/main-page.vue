@@ -16,7 +16,6 @@
             </div>
 
             <div class="column">
-                <post-preview></post-preview>
                 <post-edit></post-edit>
             </div>
 
@@ -29,11 +28,7 @@
 
 <script>
     module.exports = {
-        component: ListigTopMenu,
-        props: ['title'],
-        components: {
-            'listEdit': ListigListEdit
-        }
+        props: ['title']
     };
 </script>
 

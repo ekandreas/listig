@@ -17,7 +17,9 @@ class UserSettingModel
      */
     public function __construct()
     {
-        $this->optionKey = 'listig-' . 1; //wp_get_current_user()->ID;
+        $userId = wp_get_current_user()->ID;
+        $userId = $userId ? $userId : 1; // admin hack for development
+        $this->optionKey = 'listig-' . $userId;
         $this->fields = get_option($this->optionKey, []);
     }
 

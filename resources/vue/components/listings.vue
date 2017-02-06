@@ -1,25 +1,12 @@
 <template>
-    <div>
-        <nav class="panel" v-for="list in listings">
-            <p class="panel-heading">
-                {{ list.name }}
-                <a class="icon pull-right gear-icon" @click="edit(list)">
-                    <i class="fa fa-gear"></i>
-                </a>
-            </p>
-            <a class="panel-block">
-                { Drag your post here! }
-            </a>
-            <div class="panel-block">
-                <div class="control">
-                    <button class="button is-primary is-outlined is-fullwidth">Save</button>
-                </div>
-            </div>
-        </nav>
-    </div>
+    <draggable :list="listings"
+               :options="{group:'listings',animation:350}" @start="drag=true" @end="drag=false">
+            <list-item v-for="list in listings" :list="list" :key="list.id"></list-item>
+    </draggable>
 </template>
 
 <script>
+
     module.exports = {
         data: function () {
             return {
