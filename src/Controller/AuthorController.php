@@ -20,9 +20,8 @@ class AuthorController implements RouteInterface
             'fields'       => 'all',
             'who'          => 'authors'
         );
-        $users = get_users( $args );
+        $users = get_users($args);
 
         return $users;
     }
-
 }

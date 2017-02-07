@@ -33,5 +33,4 @@ class ListingController implements RouteInterface
         ListingModel::delete($id);
         return $id;
     }
-
 }
