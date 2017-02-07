@@ -21,5 +21,3 @@ require_once 'autoload.php';
  * Global registrations, functions and filters
  */
 require_once 'globals/required.php';
-
-

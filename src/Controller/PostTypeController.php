@@ -18,9 +18,8 @@ class PostTypeController implements RouteInterface
             'public' => true,
 
         ];
-        $posttypes = get_post_types( $args, 'objects' );
+        $posttypes = get_post_types($args, 'objects');
 
         return $posttypes;
     }
-
 }
