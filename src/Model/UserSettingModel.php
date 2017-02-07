@@ -29,7 +29,7 @@ class UserSettingModel
      * @param $key
      * @return mixed
      */
-    public function __get( $key )
+    public function __get($key)
     {
         return $this->fields[ $key ];
     }
@@ -40,7 +40,7 @@ class UserSettingModel
      * @param $key
      * @param $value
      */
-    public function __set( $key, $value )
+    public function __set($key, $value)
     {
         $this->fields[ $key ] = $value;
     }
