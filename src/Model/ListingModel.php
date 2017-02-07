@@ -16,7 +16,7 @@ class ListingModel
      */
     public function __construct($args)
     {
-        if(is_array($args)) {
+        if (is_array($args)) {
             $this->id = (int)$args['id'];
             $this->name = $args['name'];
             $this->description = $args['description'];
@@ -33,7 +33,8 @@ class ListingModel
         }
     }
 
-    public static function all() {
+    public static function all()
+    {
         $result = [];
         $args = [
             'post_type' => 'listig',
@@ -66,7 +67,8 @@ class ListingModel
         return $this;
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         wp_delete_post($id);
     }
 }
