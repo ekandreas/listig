@@ -34,6 +34,5 @@ class Script
             wp_localize_script('listig_main_page_js', 'listig', $data);
             wp_enqueue_script('listig_main_page_js');
         }
-
     }
 }
