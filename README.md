@@ -2,8 +2,8 @@
 Another List Manager in WordPress.
 Editorial plugin to manage custom post lists.
 
-## *WORK IN PROGRESS*
-Version *0.0.5*
+## WIP
+Version *0.0.6*
 
 This plugin is not yet released and will not be working in production environment.
 
