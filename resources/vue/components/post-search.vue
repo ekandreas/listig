@@ -44,9 +44,9 @@
         <draggable class="draggable-container" :list="posts"
                    :options="{ group:'posts', animation:350, pull:'clone', put:false }">
 
-            <div class="panel-block" v-for="post in posts" :class="{ 'is-active': post.ID==currentPostId }" :key="post.ID"
-                 @click="currentPostId = post.ID">
-                <span class="{ 'selected-post' : post.ID==currentPost}">
+            <div class="panel-block" v-for="post in posts" :class="{ 'is-active': post.id==currentPostId }" :key="post.id"
+                 @click="currentPostId = post.id">
+                <span class="{ 'selected-post' : post.id==currentPost}">
                     {{ post.headline }}
                 </span>
             </div>

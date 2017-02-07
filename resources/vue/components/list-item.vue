@@ -13,7 +13,7 @@
                    v-for="post in posts"
                    :list="posts"
                    @click="postEdit(post)"
-                   :class="{ 'is-active': post.ID==currentPostId }">
+                   :class="{ 'is-active': post.id==currentPostId }">
                     {{ post.headline}}
                 </a>
             </draggable>
@@ -49,11 +49,11 @@
                 let self = this;
                 self.dirty=true;
 
-                self.currentPostId = self.posts[e.newIndex].ID;
+                self.currentPostId = self.posts[e.newIndex].id;
             },
             postEdit(post) {
                 let self = this;
-                self.currentPostId = post.ID
+                self.currentPostId = post.id;
                 window.eventBus.$emit('post-edit', post);
             }
         }
