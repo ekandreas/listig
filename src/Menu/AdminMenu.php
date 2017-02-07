@@ -3,17 +3,18 @@ namespace EkAndreas\Listig\Menu;
 
 use EkAndreas\Listig\Page\MainPage;
 
-class AdminMenu {
-
-    public static function pages() {
+class AdminMenu
+{
+    public static function pages()
+    {
         return [
             'toplevel_page_listig/main',
             'listig_page_listig/settings'
         ];
     }
 
-    public static function register() {
-
+    public static function register()
+    {
         add_menu_page(
             'Listig',
             'Listig',
@@ -31,17 +32,17 @@ class AdminMenu {
             'listig/settings',
             'EkAndreas\Listig\Menu\AdminMenu::settings'
         );
-
     }
 
-    public static function main() {
+    public static function main()
+    {
         $mainPage = new MainPage();
         echo $mainPage->view();
     }
 
-    public static function settings() {
+    public static function settings()
+    {
         $settingsPage = new MainPage();
         echo $settingsPage->view();
     }
-
 }

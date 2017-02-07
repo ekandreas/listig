@@ -23,9 +23,15 @@ class PostSearchController implements RouteInterface
             'order' => 'ASC',
         ];
 
-        if ($params['posttype']) $args['post_type'] = $params['posttype'];
-        if ($params['author']) $args['author'] = $params['author'];
-        if ($params['search']) $args['s'] = $params['search'];
+        if ($params['posttype']) {
+            $args['post_type'] = $params['posttype'];
+        }
+        if ($params['author']) {
+            $args['author'] = $params['author'];
+        }
+        if ($params['search']) {
+            $args['s'] = $params['search'];
+        }
 
         $query = new \WP_Query($args);
 
@@ -33,8 +39,8 @@ class PostSearchController implements RouteInterface
             'posts' => [],
         ];
 
-        if($query->have_posts()) {
-            while($query->have_posts()) {
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
                 $query->the_post();
                 $row = [
                     'id' => get_the_ID(),
@@ -53,5 +59,4 @@ class PostSearchController implements RouteInterface
 
         return $result;
     }
-
 }
