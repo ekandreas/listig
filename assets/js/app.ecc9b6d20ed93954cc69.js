@@ -13115,7 +13115,10 @@ module.exports = {
 module.exports = {
     data: function data() {
         return {
-            links: [{ title: 'Help', url: '?page=listig/help' }, { title: 'Settings', url: '?page=listig/settings' }],
+            links: [
+                //{ title: 'Help', url: '?page=listig/help'},
+                //{ title: 'Settings', url: '?page=listig/settings'}
+            ],
             title: 'Listig'
         };
     }
@@ -13237,7 +13240,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n.draggable-container {\n    min-height: 20px;\n}\n.post-label {\n    float: right;\n}\n.selected-post {\n    color: #333;\n    font-weight: bolder;\n}\n.button-page-next span i {\n    margin-top: 5px;\n    margin-left: 10px;\n}\n.button-page-previous span i {\n    margin-top: 5px;\n    margin-right: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.draggable-container {\n    min-height: 20px;\n}\n.draggable-post:hover {\n    cursor: move;\n}\n.post-label {\n    float: right;\n}\n.selected-post {\n    color: #333;\n    font-weight: bolder;\n}\n.button-page-next span i {\n    margin-top: 5px;\n    margin-left: 10px;\n}\n.button-page-previous span i {\n    margin-top: 5px;\n    margin-right: 10px;\n}\n", ""]);
 
 // exports
 
@@ -13251,7 +13254,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n.gear-icon {\n    color: #999;\n}\n.initial-area {\n    min-height: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.draggable-post:hover {\n    cursor: move;\n}\n.gear-icon {\n    color: #999;\n}\n.initial-area {\n    min-height: 40px;\n}\n", ""]);
 
 // exports
 
@@ -15173,14 +15176,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-list-ul"
   }), _vm._v(" " + _vm._s(_vm.title) + "\n        ")])]), _vm._v(" "), _c('div', {
     staticClass: "nav-center"
-  }, [_c('div', {
+  }, [(_vm.showNewList == 'true') ? _c('div', {
     staticClass: "nav-item"
   }, [_c('a', {
     staticClass: "button is-primary",
     on: {
       "click": _vm.newList
     }
-  }, [_vm._m(0), _vm._v("\n                 " + _vm._s(_vm.lang.newListLabel) + "\n            ")])])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
+  }, [_vm._m(0), _vm._v("\n                 " + _vm._s(_vm.lang.newListLabel) + "\n            ")])]) : _vm._e()]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('div', {
     staticClass: "nav-right nav-menu"
   }, _vm._l((_vm.links), function(link) {
     return _c('a', {
@@ -15218,7 +15221,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel"
   }, [_c('p', {
     staticClass: "panel-heading"
-  }, [_vm._v("\n        Post Search\n    ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        " + _vm._s(_vm.lang.postSearchLabel) + "\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "panel-block"
   }, [_c('div', {
     staticClass: "columns"
@@ -15236,7 +15239,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "input is-small",
     attrs: {
       "type": "text",
-      "placeholder": "Search"
+      "placeholder": _vm.lang.searchPlaceholder
     },
     domProps: {
       "value": _vm._s(_vm.form.search)
@@ -15277,7 +15280,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "value": "0"
     }
-  }, [_vm._v("-- no author --")]), _vm._v(" "), _vm._l((_vm.authors), function(author) {
+  }, [_vm._v("-- " + _vm._s(_vm.lang.noAuthorLabel) + " --")]), _vm._v(" "), _vm._l((_vm.authors), function(author) {
     return _c('option', {
       domProps: {
         "value": author.data.ID
@@ -15312,7 +15315,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "value": "0"
     }
-  }, [_vm._v("-- no posttype --")]), _vm._v(" "), _vm._l((_vm.posttypes), function(posttype) {
+  }, [_vm._v("-- " + _vm._s(_vm.lang.noPosttypeLabel) + " --")]), _vm._v(" "), _vm._l((_vm.posttypes), function(posttype) {
     return _c('option', {
       domProps: {
         "value": posttype.name
@@ -15332,7 +15335,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.posts), function(post) {
     return _c('div', {
       key: post.id,
-      staticClass: "panel-block",
+      staticClass: "panel-block draggable-post",
       class: {
         'is-active': post.id == _vm.currentPostId
       },
@@ -15351,14 +15354,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.previous
     }
-  }, [_vm._m(1), _vm._v("\n            Previous\n        ")]) : _vm._e(), _vm._v(" \n\n        "), _c('span', {
+  }, [_vm._m(1), _vm._v("\n            " + _vm._s(_vm.lang.previousLabel) + "\n        ")]) : _vm._e(), _vm._v(" \n\n        "), _c('span', {
     staticClass: "tag is-primary"
   }, [_vm._v(_vm._s(_vm.form.page) + " / " + _vm._s(_vm.maxPages))]), _vm._v(" \n\n        "), (_vm.form.page < _vm.maxPages) ? _c('a', {
     staticClass: "button button-page-next is-outlined is-small",
     on: {
       "click": _vm.next
     }
-  }, [_vm._v("\n            Next\n            "), _vm._m(2)]) : _vm._e(), _vm._v(" \n\n        "), _c('p', {
+  }, [_vm._v("\n            " + _vm._s(_vm.lang.nextLabel) + "\n            "), _vm._m(2)]) : _vm._e(), _vm._v(" \n\n        "), _c('p', {
     staticClass: "control"
   }, [_c('span', {
     staticClass: "select is-small pull-right"
@@ -15461,7 +15464,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, _vm._l((_vm.list.posts), function(post) {
     return _c('a', {
-      staticClass: "panel-block",
+      staticClass: "panel-block draggable-post",
       class: {
         'is-active': post.id == _vm.currentPostId
       },
@@ -15815,7 +15818,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('top-menu', {
     attrs: {
       "links": _vm.links,
-      "showNewList": "false",
+      "showNewList": "true",
       "title": _vm.title
     }
   }), _vm._v("\n\n     "), _c('br'), _vm._v(" "), _c('div', {

@@ -27,6 +27,7 @@ class AdminMenu
             'dashicons-editor-ul', 33
         );
 
+        /*
         add_submenu_page(
             'listig/main',
             __('Help'),
@@ -44,6 +45,7 @@ class AdminMenu
             'listig/settings',
             'EkAndreas\Listig\Menu\AdminMenu::settings'
         );
+        */
     }
 
     public static function main()

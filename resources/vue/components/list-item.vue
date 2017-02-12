@@ -9,7 +9,7 @@
         <draggable :class="{ 'panel-block initial-area' : list.posts.length==0 }" :list="list.posts"
                    :options="{group:'posts',animation:350}" @start="drag=true" @end="endDrag" @add="added">
 
-            <a class="panel-block"
+            <a class="panel-block draggable-post"
                v-for="post in list.posts"
                @click="postEdit(post)"
                :class="{ 'is-active': post.id==currentPostId }">
@@ -82,6 +82,10 @@
 </script>
 
 <style>
+    .draggable-post:hover {
+        cursor: move;
+    }
+
     .gear-icon {
         color: #999;
     }
