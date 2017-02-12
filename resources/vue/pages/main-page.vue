@@ -2,7 +2,7 @@
     <div class="page-frame">
 
         <top-menu :links="links"
-                  showNewList="false"
+                  showNewList="true"
                   :title="title"></top-menu>
 
         &nbsp;<br/>
@@ -33,8 +33,8 @@
         data() {
             return {
                 links: [
-                    { title: 'Help', url: '?page=listig/help'},
-                    { title: 'Settings', url: '?page=listig/settings'}
+                    //{ title: 'Help', url: '?page=listig/help'},
+                    //{ title: 'Settings', url: '?page=listig/settings'}
                 ],
                 title: 'Listig'
             }

@@ -15,13 +15,13 @@
         </div>
         <div class="panel">
             <p class="panel-heading">
-                Post Edit
+                {{ lang.postEditLabel }}
             </p>
             <div class="panel-block">
                 <div class="control">
                     <input class="input"
                            type="text"
-                           placeholder="Headline"
+                           :placeholder="lang.headlineLabel"
                            v-on:keyup="changed(post)"
                            v-model="post.headline"/>
                 </div>
@@ -29,7 +29,7 @@
             <div class="panel-block">
                 <div class="control">
                     <textarea class="textarea"
-                              placeholder="Body"
+                              :placeholder="lang.excerptLabel"
                               v-on:keyup="changed(post)"
                               v-model="post.excerpt"></textarea>
                 </div>
@@ -38,20 +38,20 @@
                 <div class="control">
                     <button class="button" @click="changeImage">
                         <span v-if="post.imageUrl">
-                            Change image
+                            {{ lang.changeImageLabel }}
                         </span>
                         <span v-if="!post.imageUrl">
-                            Add image
+                            {{ lang.addImageLabel }}
                         </span>
                     </button>
                     <button class="button" @click="removeImage" v-if="post.imageUrl">
-                        Remove image
+                        {{ lang.removeImageLabel }}
                     </button>
                 </div>
             </div>
             <div class="panel-block" v-if="dirty">
                 <div class="control">
-                    <button class="button is-primary">Save</button>
+                    <button class="button is-primary">{{ lang.saveLabel }}</button>
                 </div>
             </div>
         </div>
@@ -67,6 +67,7 @@
                 post: {},
                 file_frame: null,
                 wp_media_post_id: 0,
+                lang: listig.lang
             }
         },
         created() {

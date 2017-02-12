@@ -1,7 +1,7 @@
 <?php
 
 add_action('admin_init', function () {
-    load_plugin_textdomain('listig', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('listig', false, dirname(plugin_basename(dirname(__FILE__))) . '/languages');
 });
 
 add_action('init', function () {

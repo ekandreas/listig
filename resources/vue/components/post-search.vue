@@ -1,13 +1,13 @@
 <template>
     <nav class="panel">
         <p class="panel-heading">
-            Post Search
+            {{ lang.postSearchLabel }}
         </p>
         <div class="panel-block">
             <div class="columns">
                 <div class="column is-4">
                     <div class="control has-icon">
-                        <input class="input is-small" type="text" placeholder="Search" @keyup="searchBounce"
+                        <input class="input is-small" type="text" :placeholder="lang.searchPlaceholder" @keyup="searchBounce"
                                v-model="form.search">
                         <span class="icon is-small">
                                 <i class="fa fa-search"></i>
@@ -19,7 +19,7 @@
                         <p class="control">
                                 <span class="select is-small">
                                     <select v-model="form.author" @change="search">
-                                      <option value="0">-- no author --</option>
+                                      <option value="0">-- {{ lang.noAuthorLabel }} --</option>
                                       <option v-for="author in authors" :value="author.data.ID">{{ author.data.display_name }}</option>
                                     </select>
                                 </span>
@@ -31,7 +31,7 @@
                         <p class="control">
                                 <span class="select is-small">
                                     <select v-model="form.posttype" @change="search">
-                                      <option value="0">-- no posttype --</option>
+                                      <option value="0">-- {{ lang.noPosttypeLabel }} --</option>
                                       <option v-for="posttype in posttypes"
                                               :value="posttype.name">{{ posttype.label }}</option>
                                     </select>
@@ -44,7 +44,7 @@
         <draggable class="draggable-container" :list="posts"
                    :options="{ group:'posts', animation:350, pull:'clone', put:false }">
 
-            <div class="panel-block" v-for="post in posts" :class="{ 'is-active': post.id==currentPostId }" :key="post.id"
+            <div class="panel-block draggable-post" v-for="post in posts" :class="{ 'is-active': post.id==currentPostId }" :key="post.id"
                  @click="currentPostId = post.id">
                 <span class="{ 'selected-post' : post.id==currentPost}">
                     {{ post.headline }}
@@ -59,13 +59,13 @@
                     <span class="icon is-small">
                         <i class="fa fa-angle-left"></i>
                     </span>
-                Previous
+                {{ lang.previousLabel }}
             </a>&nbsp;
 
             <span class="tag is-primary">{{ form.page }} / {{ maxPages }}</span>&nbsp;
 
             <a class="button button-page-next is-outlined is-small" v-if="form.page<maxPages" @click="next">
-                Next
+                {{ lang.nextLabel }}
                 <span class="icon is-small">
                         <i class="fa fa-angle-right"></i>
                     </span>
@@ -175,6 +175,10 @@
 <style>
     .draggable-container {
         min-height: 20px;
+    }
+
+    .draggable-post:hover {
+        cursor: move;
     }
 
     .post-label {

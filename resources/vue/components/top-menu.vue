@@ -9,7 +9,7 @@
             </div>
 
             <div class="nav-center">
-                <div class="nav-item">
+                <div class="nav-item" v-if="showNewList=='true'">
                     <a class="button is-primary" @click="newList">
                     <span class="icon is-small new-icon">
                         <i class="fa fa-plus"></i>
