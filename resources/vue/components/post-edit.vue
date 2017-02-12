@@ -3,9 +3,9 @@
         <div class="box">
             <h2 class="title is-2">{{ post.headline }}</h2>
             <article class="media">
-                <div class="media-left">
+                <div class="media-left" v-if="post.imageUrl">
                     <figure class="image is-64x64">
-                        <img :src="post.image" alt="Image" v-if="post.image"/>
+                        <img :src="post.imageUrl" alt="Image"/>
                     </figure>
                 </div>
                 <div class="media-content">
@@ -36,10 +36,17 @@
             </div>
             <div class="panel-block">
                 <div class="control">
-                    <input class="input" type="text" placeholder="Thumbnail, click here to change..." v-model="post.image"
-                           v-on:keyup="changed(post)"
-                           v-on:change="changed(post)"
-                           v-on:click="changeImage"/>
+                    <button class="button" @click="changeImage">
+                        <span v-if="post.imageUrl">
+                            Change image
+                        </span>
+                        <span v-if="!post.imageUrl">
+                            Add image
+                        </span>
+                    </button>
+                    <button class="button" @click="removeImage" v-if="post.imageUrl">
+                        Remove image
+                    </button>
                 </div>
             </div>
             <div class="panel-block" v-if="dirty">
@@ -57,7 +64,7 @@
             return {
                 dirty: false,
                 currentListId: 0,
-                post: [],
+                post: {},
                 file_frame: null,
                 wp_media_post_id: 0,
             }
@@ -101,12 +108,19 @@
 
                 self.file_frame.on('select', function () {
                     attachment = self.file_frame.state().get('selection').first().toJSON();
-                    self.post.image = attachment.url;
+                    self.post.imageId = attachment.id;
+                    self.post.imageUrl = attachment.url;
                     window.eventBus.$emit('list-dirty', self.currentListId);
                     wp.media.model.settings.post.id = self.wp_media_post_id;
                 });
 
                 self.file_frame.open();
+            },
+            removeImage() {
+                let self = this;
+                self.post.imageId = 0;
+                self.post.imageUrl = '';
+                window.eventBus.$emit('list-dirty', self.currentListId);
             }
 
         }

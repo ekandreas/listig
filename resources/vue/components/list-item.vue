@@ -7,7 +7,7 @@
             </a>
         </p>
         <draggable :class="{ 'panel-block initial-area' : list.posts.length==0 }" :list="list.posts"
-                   :options="{group:'posts',animation:350}" @start="drag=true" @add="added">
+                   :options="{group:'posts',animation:350}" @start="drag=true" @end="endDrag" @add="added">
 
             <a class="panel-block"
                v-for="post in list.posts"
@@ -30,7 +30,8 @@
         data() {
             return {
                 currentPostId: 0,
-                dirty: false
+                dirty: false,
+                drag: false,
             }
         },
         created() {
@@ -69,8 +70,12 @@
                 axios.post(`${listig.restUrl}/listing/${self.list.id}/posts`, self.list)
                     .then(function (response) {
                         self.dirty = false;
-                        window.eventBus.$emit('list-rebound');
+                        window.eventBus.$emit('list-rebound', self.list.id);
                     });
+            },
+            endDrag() {
+                let self = this;
+                self.dirty = true;
             }
         }
     };

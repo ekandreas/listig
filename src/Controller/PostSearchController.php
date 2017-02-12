@@ -43,8 +43,8 @@ class PostSearchController implements RouteInterface
             while ($query->have_posts()) {
                 $query->the_post();
 
-                $thumbnail = get_the_post_thumbnail_url();
-                $thumbnail = $thumbnail ? $thumbnail : null;
+                $imageId = (int)get_post_thumbnail_id();
+                $imageUrl = $imageId ? wp_get_attachment_image_url($imageId): '';
 
                 $row = apply_filters('listig/post', [
 
@@ -58,7 +58,8 @@ class PostSearchController implements RouteInterface
 
                     'url' => get_the_permalink(),
 
-                    'image' => $thumbnail,
+                    'imageId' => $imageId,
+                    'imageUrl' => $imageUrl,
 
                 ]);
 

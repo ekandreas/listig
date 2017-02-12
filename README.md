@@ -13,6 +13,27 @@ As development environment we use another repo at [Github](https://github.com/ek
 * PHP ^7.0 
 * WordPress ^4.7
 
+## Usage in templates
+The global function `listig` accepts the ID of the list you want to loop. The ID is printed in the list settings (the gear icon).
+
+`listig` returns an array with posts of properties; headline, excerpt, imageId and imageUrl.
+
+A simple example to render the output from a list:
+```
+$posts = listig(236);
+foreach ($posts as $post) {
+    ?>
+    <img src="<?= $post->imageUrl ?>"/>
+    <h2>
+        <?= $post->headline ?>
+    </h2>
+    <p>
+        <?= $post->excerpt ?>
+    </p>
+    <?php
+}
+```
+
 ## Hooks and filters
 * `listig/post` when transforming the post data to a Listig post. Use this to override specific settings for your post type.
 * `listig/strip_tags` if you don't wont Listig to strip tags.

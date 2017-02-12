@@ -95,7 +95,7 @@
                         self.form.description = '';
                         self.form.private = false;
                         self.form.posts = [];
-                        window.eventBus.$emit('list-rebound');
+                        window.eventBus.$emit('list-rebound', response.data.id);
                         self.moduleClass = 'modal';
                     });
             },
@@ -105,7 +105,7 @@
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.delete(listig.restUrl + '/listing/' + self.form.id)
                     .then(function (response) {
-                        window.eventBus.$emit('list-rebound');
+                        window.eventBus.$emit('list-rebound', self.form.id);
                         self.moduleClass = 'modal';
                     });
             }

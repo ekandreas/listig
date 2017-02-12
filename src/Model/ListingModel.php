@@ -79,11 +79,29 @@ class ListingModel
         //    'post_content' => serialize($this), // ,
         //]);
 
-        return $this;
+        return ListingModel::get($this->id);
     }
 
-    public function delete($id)
+    /**
+     * @param $id
+     */
+    public static function delete($id)
     {
         wp_delete_post($id);
+    }
+
+    /**
+     * @param $id
+     * @return null|static
+     */
+    public static function get($id)
+    {
+        // easy check if post exists
+        $status = get_post_status($id);
+
+        if ($status) {
+            return new ListingModel($id);
+        }
+        return null;
     }
 }
