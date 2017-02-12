@@ -31,20 +31,6 @@ class Script
             'addImageLabel' => __('Add image','listig'),
             'removeImageLabel' => __('Remove image','listig'),
             'changeImageLabel' => __('Change image','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
-            '' => __('','listig'),
         ];
     }
 }
