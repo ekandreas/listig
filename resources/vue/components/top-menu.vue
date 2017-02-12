@@ -4,7 +4,7 @@
 
             <div class="nav-left">
                 <a class="nav-item">
-                    <i class="fa fa-list-ul"></i>&nbsp;Listig
+                    <i class="fa fa-list-ul"></i>&nbsp;{{ title }}
                 </a>
             </div>
 
@@ -30,8 +30,8 @@
             <!-- This "nav-menu" is hidden on mobile -->
             <!-- Add the modifier "is-active" to display it on mobile -->
             <div class="nav-right nav-menu">
-                <a class="nav-item" href="?page=listig/settings">
-                    {{ lang.settingsLabel }}
+                <a v-for="link in links" class="nav-item" :href="link.url">
+                    {{ link.title }}
                 </a>
             </div>
 
@@ -41,6 +41,7 @@
 
 <script>
     module.exports = {
+        props: ['title','showNewList','links'],
         data: function() {
             return {
                 lang: listig.lang

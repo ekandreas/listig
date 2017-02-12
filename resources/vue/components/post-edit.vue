@@ -19,17 +19,26 @@
             </p>
             <div class="panel-block">
                 <div class="control">
-                    <input class="input" type="text" placeholder="Headline" v-model="post.headline"/>
+                    <input class="input"
+                           type="text"
+                           placeholder="Headline"
+                           v-on:keyup="changed(post)"
+                           v-model="post.headline"/>
                 </div>
             </div>
             <div class="panel-block">
                 <div class="control">
-                    <textarea class="textarea" placeholder="Body" v-model="post.excerpt"></textarea>
+                    <textarea class="textarea"
+                              placeholder="Body"
+                              v-on:keyup="changed(post)"
+                              v-model="post.excerpt"></textarea>
                 </div>
             </div>
             <div class="panel-block">
                 <div class="control">
                     <input class="input" type="text" placeholder="Thumbnail, click here to change..." v-model="post.image"
+                           v-on:keyup="changed(post)"
+                           v-on:change="changed(post)"
                            v-on:click="changeImage"/>
                 </div>
             </div>
@@ -47,6 +56,7 @@
         data() {
             return {
                 dirty: false,
+                currentListId: 0,
                 post: [],
                 file_frame: null,
                 wp_media_post_id: 0,
@@ -54,8 +64,9 @@
         },
         created() {
             let self = this;
-            window.eventBus.$on('post-edit', function (post) {
-                self.edit(post)
+            window.eventBus.$on('post-edit', function (data) {
+                self.currentListId = data.listId;
+                self.edit(data.post)
             });
         },
         methods: {
@@ -63,6 +74,10 @@
                 let self = this;
 
                 self.post = post;
+            },
+            changed(post) {
+                let self = this;
+                window.eventBus.$emit('list-dirty', self.currentListId);
             },
             changeImage() {
                 let self = this;
@@ -87,6 +102,7 @@
                 self.file_frame.on('select', function () {
                     attachment = self.file_frame.state().get('selection').first().toJSON();
                     self.post.image = attachment.url;
+                    window.eventBus.$emit('list-dirty', self.currentListId);
                     wp.media.model.settings.post.id = self.wp_media_post_id;
                 });
 

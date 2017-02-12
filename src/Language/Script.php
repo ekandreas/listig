@@ -17,6 +17,8 @@ class Script
             'descriptionPlaceholder' => __('Tell a story about this list and it´s purpose!', 'listig'),
             'privateLabel' => __('Private (only you can see and edit this list)', 'listig'),
             'destroyLabel' => __('Delete list', 'listig'),
+            'helpTitle' => __('help','listig'),
+            'settingsTitle' => __('settings','listig'),
         ];
     }
 }

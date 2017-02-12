@@ -1,28 +1,27 @@
 <template>
-        <nav class="panel">
-            <p class="panel-heading">
-                {{ list.name }}
-                <a class="icon pull-right gear-icon" @click="listEdit(list)">
-                    <i class="fa fa-gear"></i>
-                </a>
-            </p>
-            <draggable :class="{ 'panel-block initial-area' : posts.length==0 }" :list="posts"
-                       :options="{group:'posts',animation:350}" @start="drag=true" @add="added">
+    <nav class="panel">
+        <p class="panel-heading">
+            {{ list.name }}
+            <a class="icon pull-right gear-icon" @click="listEdit(list)">
+                <i class="fa fa-gear"></i>
+            </a>
+        </p>
+        <draggable :class="{ 'panel-block initial-area' : list.posts.length==0 }" :list="list.posts"
+                   :options="{group:'posts',animation:350}" @start="drag=true" @add="added">
 
-                <a class="panel-block"
-                   v-for="post in posts"
-                   :list="posts"
-                   @click="postEdit(post)"
-                   :class="{ 'is-active': post.id==currentPostId }">
-                    {{ post.headline}}
-                </a>
-            </draggable>
-            <div class="panel-block" v-if="dirty">
-                <div class="control">
-                    <button class="button is-primary" @click="save">Save</button>
-                </div>
+            <a class="panel-block"
+               v-for="post in list.posts"
+               @click="postEdit(post)"
+               :class="{ 'is-active': post.id==currentPostId }">
+                {{ post.headline}}
+            </a>
+        </draggable>
+        <div class="panel-block" v-if="dirty">
+            <div class="control">
+                <button class="button is-primary" @click="save">Save</button>
             </div>
-        </nav>
+        </div>
+    </nav>
 </template>
 
 <script>
@@ -31,12 +30,20 @@
         data() {
             return {
                 currentPostId: 0,
-                posts: [],
                 dirty: false
             }
         },
         created() {
             let self = this;
+            window.eventBus.$on('list-dirty', function (listId) {
+                if (listId == self.list.id) self.dirty = true;
+            });
+            $(window).bind('beforeunload', function(e){
+                if(self.dirty)
+                    return "Unsaved changes in list " + self.list.name;
+                else
+                    e=null; // i.e; if form state change show warning box, else don't show it.
+            });
         },
         mounted() {
             let self = this;
@@ -47,16 +54,23 @@
             },
             added(e) {
                 let self = this;
-                self.dirty=true;
+                self.dirty = true;
 
-                self.currentPostId = self.posts[e.newIndex].id;
+                self.currentPostId = self.list.posts[e.newIndex].id;
             },
             postEdit(post) {
                 let self = this;
                 self.currentPostId = post.id;
-                window.eventBus.$emit('post-edit', post);
+                window.eventBus.$emit('post-edit', {listId: self.list.id, post: post});
             },
             save() {
+                let self = this;
+                axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
+                axios.post(`${listig.restUrl}/listing/${self.list.id}/posts`, self.list)
+                    .then(function (response) {
+                        self.dirty = false;
+                        window.eventBus.$emit('list-rebound');
+                    });
             }
         }
     };
@@ -66,6 +80,7 @@
     .gear-icon {
         color: #999;
     }
+
     .initial-area {
         min-height: 40px;
     }

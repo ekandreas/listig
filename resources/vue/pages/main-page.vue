@@ -1,7 +1,9 @@
 <template>
     <div class="page-frame">
 
-        <top-menu></top-menu>
+        <top-menu :links="links"
+                  showNewList="false"
+                  :title="title"></top-menu>
 
         &nbsp;<br/>
 
@@ -28,7 +30,15 @@
 
 <script>
     module.exports = {
-        props: ['title']
+        data() {
+            return {
+                links: [
+                    { title: 'Help', url: '?page=listig/help'},
+                    { title: 'Settings', url: '?page=listig/settings'}
+                ],
+                title: 'Listig'
+            }
+        }
     };
 </script>
 

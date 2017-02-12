@@ -7,6 +7,8 @@
                 <button class="delete" @click="close"></button>
             </header>
             <section class="modal-card-body">
+                <label class="label">ID: {{ form.id }}</label>
+
                 <label class="label">{{ lang.nameLabel }}</label>
                 <p class="control">
                     <input ref="editName"
@@ -58,7 +60,8 @@
                     id: 0,
                     name: '',
                     description: '',
-                    private: false
+                    private: false,
+                    posts: []
                 },
                 lang: listig.lang,
             }
@@ -71,6 +74,7 @@
                 self.form.name = list ? list.name : '';
                 self.form.description = list ? list.description : '';
                 self.form.private = list ? list.private : false;
+                self.form.posts = list ? list.posts : [];
 
                 self.moduleClass = 'modal is-active';
                 setTimeout(function () {
@@ -90,6 +94,7 @@
                         self.form.name = '';
                         self.form.description = '';
                         self.form.private = false;
+                        self.form.posts = [];
                         window.eventBus.$emit('list-rebound');
                         self.moduleClass = 'modal';
                     });

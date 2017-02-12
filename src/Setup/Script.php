@@ -30,11 +30,5 @@ class Script
         wp_register_script('listig_js', plugins_url('listig/'.$manifest['assets/js/app.js']), [], null, true);
         wp_localize_script('listig_js', 'listig', $data);
         wp_enqueue_script('listig_js');
-
-        if ($hook == 'toplevel_page_listig/main') {
-            wp_register_script('listig_main_page_js', plugins_url('listig/assets/js/main-page.js'), [], null, true);
-            wp_localize_script('listig_main_page_js', 'listig', $data);
-            wp_enqueue_script('listig_main_page_js');
-        }
     }
 }
