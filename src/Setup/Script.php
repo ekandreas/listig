@@ -13,6 +13,8 @@ class Script
             return;
         }
 
+        wp_enqueue_media();
+
         $manifest = json_decode(file_get_contents(__DIR__.'/../../mix-manifest.json'), true);
 
         wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -28,11 +30,5 @@ class Script
         wp_register_script('listig_js', plugins_url('listig/'.$manifest['assets/js/app.js']), [], null, true);
         wp_localize_script('listig_js', 'listig', $data);
         wp_enqueue_script('listig_js');
-
-        if ($hook == 'toplevel_page_listig/main') {
-            wp_register_script('listig_main_page_js', plugins_url('listig/assets/js/main-page.js'), [], null, true);
-            wp_localize_script('listig_main_page_js', 'listig', $data);
-            wp_enqueue_script('listig_main_page_js');
-        }
     }
 }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Listig\n"
-"POT-Creation-Date: 2017-02-04 17:10+0100\n"
-"PO-Revision-Date: 2017-02-04 17:11+0100\n"
+"POT-Creation-Date: 2017-02-12 20:29+0100\n"
+"PO-Revision-Date: 2017-02-12 20:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: src/Language/Script.php:9 src/Menu/AdminMenu.php:28
-#: src/Menu/AdminMenu.php:29
+#: src/Language/Script.php:9
+#, fuzzy
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -65,6 +65,62 @@ msgstr "Privat (bara du kan se och ändra denna lista)"
 msgid "Delete list"
 msgstr "Ta bort listan"
 
+#: src/Language/Script.php:20
+msgid "help"
+msgstr "Hjälp"
+
+#: src/Language/Script.php:21
+msgid "settings"
+msgstr "Inställningar"
+
+#: src/Language/Script.php:22
+msgid "search"
+msgstr "sök"
+
+#: src/Language/Script.php:23
+msgid "Search Posts"
+msgstr "Sök innehåll"
+
+#: src/Language/Script.php:24
+msgid "author"
+msgstr "författare"
+
+#: src/Language/Script.php:25
+msgid "posttype"
+msgstr "posttyp"
+
+#: src/Language/Script.php:26
+msgid "Previous"
+msgstr "Föregående"
+
+#: src/Language/Script.php:27
+msgid "Next"
+msgstr "Nästa"
+
+#: src/Language/Script.php:28
+msgid "Post Edit"
+msgstr "Redigera innehåll"
+
+#: src/Language/Script.php:29
+msgid "Headline"
+msgstr "Rubrik"
+
+#: src/Language/Script.php:30
+msgid "Excerpt"
+msgstr "Sammanfattning"
+
+#: src/Language/Script.php:31
+msgid "Add image"
+msgstr "Lägg till bild"
+
+#: src/Language/Script.php:32
+msgid "Remove image"
+msgstr "Ta bort bild"
+
+#: src/Language/Script.php:33
+msgid "Change image"
+msgstr "Ändra bild"
+
 #. Plugin Name of the plugin/theme
 msgid "Listig"
 msgstr "Listig"
@@ -84,6 +140,12 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "https://www.elseif.se/"
 msgstr ""
+
+#~ msgid "Help"
+#~ msgstr "Hjälp"
+
+#~ msgid "no author"
+#~ msgstr "författare"
 
 #~ msgid "Edit list"
 #~ msgstr "Ändra lista"

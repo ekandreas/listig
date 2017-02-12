@@ -9,7 +9,9 @@ class ListingController implements RouteInterface
 {
     public static function routes()
     {
+        Base::get('/listing/(?P<id>\d+)', __CLASS__ . '@get');
         Base::get('/listing', __CLASS__ . '@all');
+        Base::post('/listing/(?P<id>\d+)/posts', __CLASS__ . '@savePosts');
         Base::post('/listing/(?P<id>\d+)', __CLASS__ . '@save');
         Base::delete('/listing/(?P<id>\d+)', __CLASS__ . '@delete');
     }
@@ -20,11 +22,16 @@ class ListingController implements RouteInterface
         return $result;
     }
 
+    public function get(\WP_REST_Request $request)
+    {
+        $id = (int)$request->get_param('id');
+        return ListingModel::get($id);
+    }
+
     public function save(\WP_REST_Request $request)
     {
         $listing = new ListingModel($request->get_json_params());
-        $listing->save();
-        return $listing;
+        return $listing->save();
     }
 
     public function delete(\WP_REST_Request $request)
@@ -32,5 +39,16 @@ class ListingController implements RouteInterface
         $id = (int)$request->get_param('id');
         ListingModel::delete($id);
         return $id;
+    }
+
+    public function savePosts(\WP_REST_Request $request)
+    {
+        $params = $request->get_json_params();
+
+        $listing = new ListingModel((int)$params['id']);
+        $listing->posts = $params['posts'];
+        $listing->save();
+
+        return $listing;
     }
 }

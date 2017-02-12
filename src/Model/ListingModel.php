@@ -9,6 +9,7 @@ class ListingModel
     public $name = '';
     public $private = false;
     public $description = '';
+    public $posts = [];
 
     /**
      * ListingModel constructor.
@@ -21,15 +22,17 @@ class ListingModel
             $this->name = $args['name'];
             $this->description = $args['description'];
             $this->private = $args['private'];
+            $this->posts = isset($args['posts']) && is_array($args['posts']) ? $args['posts'] : [];
         }
 
         if (is_integer($args)) {
             $post = get_post($args);
-            $object = json_decode($post->post_content);
+            $object = json_decode($post->post_content, false, 512, JSON_UNESCAPED_UNICODE);
             $this->id = $post->ID;
-            $this->name = $object->name;
-            $this->description = $object->description;
-            $this->private = $object->private;
+            $this->name = isset($object->name) ? $object->name : '';
+            $this->description = isset($object->description) ? $object->description : '';
+            $this->private = isset($object->private) ? $object->private : false;
+            $this->posts = isset($object->posts) && is_array($object->posts) ? $object->posts : [];
         }
     }
 
@@ -50,6 +53,8 @@ class ListingModel
 
     public function save()
     {
+        global $wpdb;
+
         if ($this->id == 0) {
             $this->id = wp_insert_post([
                 'post_title' => $this->name,
@@ -58,17 +63,45 @@ class ListingModel
             ]);
         }
 
-        wp_update_post([
-            'ID' => $this->id,
-            'post_title' => $this->name,
-            'post_content' => json_encode($this, JSON_UNESCAPED_UNICODE),
-        ]);
+        $wpdb->update(
+            "{$wpdb->prefix}posts",
+            [
+                'post_title' => $this->name,
+                'post_content' => json_encode($this, JSON_UNESCAPED_UNICODE),
+            ],
+            ['ID' => $this->id]
+        );
 
-        return $this;
+        // WP manipulates data, we want to store unformatted data inside post_content to get version handling.
+        //wp_update_post([
+        //    'ID' => $this->id,
+        //    'post_title' => $this->name,
+        //    'post_content' => serialize($this), // ,
+        //]);
+
+        return ListingModel::get($this->id);
     }
 
-    public function delete($id)
+    /**
+     * @param $id
+     */
+    public static function delete($id)
     {
         wp_delete_post($id);
+    }
+
+    /**
+     * @param $id
+     * @return null|static
+     */
+    public static function get($id)
+    {
+        // easy check if post exists
+        $status = get_post_status($id);
+
+        if ($status) {
+            return new ListingModel($id);
+        }
+        return null;
     }
 }

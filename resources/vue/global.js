@@ -14,6 +14,8 @@ window.ListigListings = require('./../../resources/vue/components/listings.vue')
 
 window.ListigTopMenu = require('./../../resources/vue/components/top-menu.vue');
 window.ListigMainPage = require('./../../resources/vue/pages/main-page.vue');
+window.ListigSettingsPage = require('./../../resources/vue/pages/settings-page.vue');
+window.ListigHelpPage = require('./../../resources/vue/pages/help-page.vue');
 
 window.draggable = require('vuedraggable');
 
@@ -27,4 +29,6 @@ Vue.component('listings', window.ListigListings);
 Vue.component('post-search', window.ListigPostSearch);
 Vue.component('post-preview', window.ListigPostPreview);
 Vue.component('main-page', window.ListigMainPage);
+Vue.component('settings-page', window.ListigSettingsPage);
+Vue.component('help-page', window.ListigHelpPage);
 Vue.component('top-menu', window.ListigTopMenu);

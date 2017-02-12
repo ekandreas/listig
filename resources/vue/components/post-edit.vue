@@ -1,58 +1,57 @@
 <template>
-    <div>
+    <div v-if="post.id">
         <div class="box">
-            <p><strong>{{ post.headline }}</strong></p>
-            <br/>
+            <h2 class="title is-2">{{ post.headline }}</h2>
             <article class="media">
-                <div class="media-left">
+                <div class="media-left" v-if="post.imageUrl">
                     <figure class="image is-64x64">
-                        <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        <img :src="post.imageUrl" alt="Image"/>
                     </figure>
                 </div>
                 <div class="media-content">
-                    <div class="content">
-                        {{ post.body }}
-                    </div>
+                    <div class="content" v-html="post.excerpt"></div>
                 </div>
             </article>
         </div>
         <div class="panel">
             <p class="panel-heading">
-                Post Edit
+                {{ lang.postEditLabel }}
             </p>
             <div class="panel-block">
                 <div class="control">
-                    <input class="input" type="text" placeholder="Headline" v-model="post.headline">
+                    <input class="input"
+                           type="text"
+                           :placeholder="lang.headlineLabel"
+                           v-on:keyup="changed(post)"
+                           v-model="post.headline"/>
                 </div>
             </div>
             <div class="panel-block">
                 <div class="control">
-                    <textarea class="textarea" placeholder="Body" v-model="post.body"></textarea>
+                    <textarea class="textarea"
+                              :placeholder="lang.excerptLabel"
+                              v-on:keyup="changed(post)"
+                              v-model="post.excerpt"></textarea>
                 </div>
             </div>
             <div class="panel-block">
                 <div class="control">
-                    <input class="input" type="text" placeholder="Url" v-model="post.url">
-                </div>
-            </div>
-            <div class="panel-block">
-                <div class="control">
-                    <input class="input" type="text" placeholder="Source">
-                </div>
-            </div>
-            <div class="panel-block">
-                <div class="control">
-                    <input class="input" type="text" placeholder="Tags">
-                </div>
-            </div>
-            <div class="panel-block">
-                <div class="control">
-                    <input class="input" type="text" placeholder="Image">
+                    <button class="button" @click="changeImage">
+                        <span v-if="post.imageUrl">
+                            {{ lang.changeImageLabel }}
+                        </span>
+                        <span v-if="!post.imageUrl">
+                            {{ lang.addImageLabel }}
+                        </span>
+                    </button>
+                    <button class="button" @click="removeImage" v-if="post.imageUrl">
+                        {{ lang.removeImageLabel }}
+                    </button>
                 </div>
             </div>
             <div class="panel-block" v-if="dirty">
                 <div class="control">
-                    <button class="button is-primary">Save</button>
+                    <button class="button is-primary">{{ lang.saveLabel }}</button>
                 </div>
             </div>
         </div>
@@ -64,13 +63,18 @@
         data() {
             return {
                 dirty: false,
-                post: []
+                currentListId: 0,
+                post: {},
+                file_frame: null,
+                wp_media_post_id: 0,
+                lang: listig.lang
             }
         },
         created() {
             let self = this;
-            window.eventBus.$on('post-edit', function (post) {
-                self.edit(post)
+            window.eventBus.$on('post-edit', function (data) {
+                self.currentListId = data.listId;
+                self.edit(data.post)
             });
         },
         methods: {
@@ -78,7 +82,48 @@
                 let self = this;
 
                 self.post = post;
+            },
+            changed(post) {
+                let self = this;
+                window.eventBus.$emit('list-dirty', self.currentListId);
+            },
+            changeImage() {
+                let self = this;
+
+                self.wp_media_post_id = wp.media.model.settings.post.id;
+                if (self.file_frame) {
+                    self.file_frame.uploader.uploader.param('post_id', self.post.id);
+                    self.file_frame.open();
+                    return;
+                } else {
+                    wp.media.model.settings.post.id = self.post.id;
+                }
+
+                self.file_frame = wp.media.frames.file_frame = wp.media({
+                    title: jQuery(this).data('uploader_title'),
+                    button: {
+                        text: jQuery(this).data('uploader_button_text'),
+                    },
+                    multiple: false
+                });
+
+                self.file_frame.on('select', function () {
+                    attachment = self.file_frame.state().get('selection').first().toJSON();
+                    self.post.imageId = attachment.id;
+                    self.post.imageUrl = attachment.url;
+                    window.eventBus.$emit('list-dirty', self.currentListId);
+                    wp.media.model.settings.post.id = self.wp_media_post_id;
+                });
+
+                self.file_frame.open();
+            },
+            removeImage() {
+                let self = this;
+                self.post.imageId = 0;
+                self.post.imageUrl = '';
+                window.eventBus.$emit('list-dirty', self.currentListId);
             }
+
         }
     };
 </script>

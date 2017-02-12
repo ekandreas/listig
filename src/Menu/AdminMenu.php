@@ -1,7 +1,9 @@
 <?php
 namespace EkAndreas\Listig\Menu;
 
+use EkAndreas\Listig\Page\HelpPage;
 use EkAndreas\Listig\Page\MainPage;
+use EkAndreas\Listig\Page\SettingsPage;
 
 class AdminMenu
 {
@@ -9,7 +11,8 @@ class AdminMenu
     {
         return [
             'toplevel_page_listig/main',
-            'listig_page_listig/settings'
+            'listig_page_listig/settings',
+            'listig_page_listig/help'
         ];
     }
 
@@ -24,6 +27,16 @@ class AdminMenu
             'dashicons-editor-ul', 33
         );
 
+        /*
+        add_submenu_page(
+            'listig/main',
+            __('Help'),
+            __('Help'),
+            'manage_options',
+            'listig/help',
+            'EkAndreas\Listig\Menu\AdminMenu::help'
+        );
+
         add_submenu_page(
             'listig/main',
             __('Settings'),
@@ -32,6 +45,7 @@ class AdminMenu
             'listig/settings',
             'EkAndreas\Listig\Menu\AdminMenu::settings'
         );
+        */
     }
 
     public static function main()
@@ -40,9 +54,15 @@ class AdminMenu
         echo $mainPage->view();
     }
 
+    public static function help()
+    {
+        $helpPage = new HelpPage();
+        echo $helpPage->view();
+    }
+
     public static function settings()
     {
-        $settingsPage = new MainPage();
+        $settingsPage = new SettingsPage();
         echo $settingsPage->view();
     }
 }
