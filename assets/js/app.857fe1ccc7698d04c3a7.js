@@ -12727,7 +12727,8 @@ module.exports = {
             currentListId: 0,
             post: {},
             file_frame: null,
-            wp_media_post_id: 0
+            wp_media_post_id: 0,
+            lang: listig.lang
         };
     },
     created: function created() {
@@ -13268,7 +13269,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -15524,7 +15525,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel"
   }, [_c('p', {
     staticClass: "panel-heading"
-  }, [_vm._v("\n            Post Edit\n        ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n            " + _vm._s(_vm.lang.postEditLabel) + "\n        ")]), _vm._v(" "), _c('div', {
     staticClass: "panel-block"
   }, [_c('div', {
     staticClass: "control"
@@ -15538,7 +15539,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "input",
     attrs: {
       "type": "text",
-      "placeholder": "Headline"
+      "placeholder": _vm.lang.headlineLabel
     },
     domProps: {
       "value": _vm._s(_vm.post.headline)
@@ -15565,7 +15566,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "textarea",
     attrs: {
-      "placeholder": "Body"
+      "placeholder": _vm.lang.excerptLabel
     },
     domProps: {
       "value": _vm._s(_vm.post.excerpt)
@@ -15588,21 +15589,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.changeImage
     }
-  }, [(_vm.post.imageUrl) ? _c('span', [_vm._v("\n                        Change image\n                    ")]) : _vm._e(), _vm._v(" "), (!_vm.post.imageUrl) ? _c('span', [_vm._v("\n                        Add image\n                    ")]) : _vm._e()]), _vm._v(" "), (_vm.post.imageUrl) ? _c('button', {
+  }, [(_vm.post.imageUrl) ? _c('span', [_vm._v("\n                        " + _vm._s(_vm.lang.changeImageLabel) + "\n                    ")]) : _vm._e(), _vm._v(" "), (!_vm.post.imageUrl) ? _c('span', [_vm._v("\n                        " + _vm._s(_vm.lang.addImageLabel) + "\n                    ")]) : _vm._e()]), _vm._v(" "), (_vm.post.imageUrl) ? _c('button', {
     staticClass: "button",
     on: {
       "click": _vm.removeImage
     }
-  }, [_vm._v("\n                    Remove image\n                ")]) : _vm._e()])]), _vm._v(" "), (_vm.dirty) ? _c('div', {
+  }, [_vm._v("\n                    " + _vm._s(_vm.lang.removeImageLabel) + "\n                ")]) : _vm._e()])]), _vm._v(" "), (_vm.dirty) ? _c('div', {
     staticClass: "panel-block"
-  }, [_vm._m(0)]) : _vm._e()])]) : _vm._e()
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
+  }, [_c('div', {
     staticClass: "control"
   }, [_c('button', {
     staticClass: "button is-primary"
-  }, [_vm._v("Save")])])
-}]}
+  }, [_vm._v(_vm._s(_vm.lang.saveLabel))])])]) : _vm._e()])]) : _vm._e()
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
