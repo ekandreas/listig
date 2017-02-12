@@ -12,6 +12,8 @@ List manager for WordPress posts
 == Description ==
 Listig is a list manager inside WordPress admin that gives the user possibilities to create ordered post lists over post types for presentation and usage through the site theme.
 
+More information about the plugin and how to use it: [Github](https://github.com/ekandreas/listig)
+
 == Installation ==
 1. Upload the contents of the zip (including the folder) to the `/wp-content/plugins/` directory
 2. Activate the plugin through the \'Plugins\' menu in WordPress
