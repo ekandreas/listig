@@ -29,7 +29,7 @@
             </div>
             <div class="panel-block">
                 <div class="control">
-                    <input class="input" type="text" placeholder="Image" v-model="post.image"
+                    <input class="input" type="text" placeholder="Thumbnail, click here to change..." v-model="post.image"
                            v-on:click="changeImage"/>
                 </div>
             </div>

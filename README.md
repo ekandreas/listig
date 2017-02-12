@@ -18,6 +18,9 @@ As development environment we use another repo at [Github](https://github.com/ek
 * `listig/strip_tags` if you don't wont Listig to strip tags.
 
 ## Things to consider:
+This plugin is using the WP REST API but with it's own endpoints. 
+Every call is authenticated with nonce and X-WP-Nonce to the header.
+
 Composer is just used as a Packagist declaration. 
 The plugin requirements for the backend is just WordPress from version 4.7.
 
