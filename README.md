@@ -13,6 +13,10 @@ As development environment we use another repo at [Github](https://github.com/ek
 * PHP ^7.0 
 * WordPress ^4.7
 
+## Hooks and filters
+* `listig/post` when transforming the post data to a Listig post. Use this to override specific settings for your post type.
+* `listig/strip_tags` if you don't wont Listig to strip tags.
+
 ## Things to consider:
 Composer is just used as a Packagist declaration. 
 The plugin requirements for the backend is just WordPress from version 4.7.

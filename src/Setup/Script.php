@@ -13,6 +13,8 @@ class Script
             return;
         }
 
+        wp_enqueue_media();
+
         $manifest = json_decode(file_get_contents(__DIR__.'/../../mix-manifest.json'), true);
 
         wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');

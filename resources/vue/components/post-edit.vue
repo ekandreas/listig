@@ -1,18 +1,15 @@
 <template>
-    <div>
+    <div v-if="post.id">
         <div class="box">
-            <p><strong>{{ post.headline }}</strong></p>
-            <br/>
+            <h2 class="title is-2">{{ post.headline }}</h2>
             <article class="media">
                 <div class="media-left">
                     <figure class="image is-64x64">
-                        <img src="http://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        <img :src="post.image" alt="Image" v-if="post.image"/>
                     </figure>
                 </div>
                 <div class="media-content">
-                    <div class="content">
-                        {{ post.body }}
-                    </div>
+                    <div class="content" v-html="post.excerpt"></div>
                 </div>
             </article>
         </div>
@@ -22,32 +19,18 @@
             </p>
             <div class="panel-block">
                 <div class="control">
-                    <input class="input" type="text" placeholder="Headline" v-model="post.headline">
+                    <input class="input" type="text" placeholder="Headline" v-model="post.headline"/>
                 </div>
             </div>
             <div class="panel-block">
                 <div class="control">
-                    <textarea class="textarea" placeholder="Body" v-model="post.body"></textarea>
+                    <textarea class="textarea" placeholder="Body" v-model="post.excerpt"></textarea>
                 </div>
             </div>
             <div class="panel-block">
                 <div class="control">
-                    <input class="input" type="text" placeholder="Url" v-model="post.url">
-                </div>
-            </div>
-            <div class="panel-block">
-                <div class="control">
-                    <input class="input" type="text" placeholder="Source">
-                </div>
-            </div>
-            <div class="panel-block">
-                <div class="control">
-                    <input class="input" type="text" placeholder="Tags">
-                </div>
-            </div>
-            <div class="panel-block">
-                <div class="control">
-                    <input class="input" type="text" placeholder="Image">
+                    <input class="input" type="text" placeholder="Image" v-model="post.image"
+                           v-on:click="changeImage"/>
                 </div>
             </div>
             <div class="panel-block" v-if="dirty">
@@ -64,7 +47,9 @@
         data() {
             return {
                 dirty: false,
-                post: []
+                post: [],
+                file_frame: null,
+                wp_media_post_id: 0,
             }
         },
         created() {
@@ -78,7 +63,36 @@
                 let self = this;
 
                 self.post = post;
+            },
+            changeImage() {
+                let self = this;
+
+                self.wp_media_post_id = wp.media.model.settings.post.id;
+                if (self.file_frame) {
+                    self.file_frame.uploader.uploader.param('post_id', self.post.id);
+                    self.file_frame.open();
+                    return;
+                } else {
+                    wp.media.model.settings.post.id = self.post.id;
+                }
+
+                self.file_frame = wp.media.frames.file_frame = wp.media({
+                    title: jQuery(this).data('uploader_title'),
+                    button: {
+                        text: jQuery(this).data('uploader_button_text'),
+                    },
+                    multiple: false
+                });
+
+                self.file_frame.on('select', function () {
+                    attachment = self.file_frame.state().get('selection').first().toJSON();
+                    self.post.image = attachment.url;
+                    wp.media.model.settings.post.id = self.wp_media_post_id;
+                });
+
+                self.file_frame.open();
             }
+
         }
     };
 </script>

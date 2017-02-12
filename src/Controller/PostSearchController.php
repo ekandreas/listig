@@ -42,12 +42,25 @@ class PostSearchController implements RouteInterface
         if ($query->have_posts()) {
             while ($query->have_posts()) {
                 $query->the_post();
-                $row = [
+
+                $thumbnail = get_the_post_thumbnail_url();
+                $thumbnail = $thumbnail ? $thumbnail : null;
+
+                $row = apply_filters('listig/post', [
+
                     'id' => get_the_ID(),
+
                     'headline' => get_the_title(),
-                    'body' => get_the_excerpt(),
+
+                    'excerpt' => apply_filters('listig/strip_tags', true) ?
+                        strip_tags(get_the_excerpt()) :
+                        get_the_excerpt(),
+
                     'url' => get_the_permalink(),
-                ];
+
+                    'image' => $thumbnail,
+
+                ]);
 
                 $result['posts'][] = $row;
             }

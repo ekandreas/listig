@@ -19,7 +19,7 @@
             </draggable>
             <div class="panel-block" v-if="dirty">
                 <div class="control">
-                    <button class="button is-primary">Save</button>
+                    <button class="button is-primary" @click="save">Save</button>
                 </div>
             </div>
         </nav>
@@ -28,24 +28,24 @@
 <script>
     module.exports = {
         props: ['list'],
-        data: function () {
+        data() {
             return {
                 currentPostId: 0,
                 posts: [],
                 dirty: false
             }
         },
-        created: function () {
+        created() {
             let self = this;
         },
-        mounted: function () {
+        mounted() {
             let self = this;
         },
         methods: {
-            listEdit: function (list) {
+            listEdit(list) {
                 window.eventBus.$emit('list-edit', list);
             },
-            added: function(e) {
+            added(e) {
                 let self = this;
                 self.dirty=true;
 
@@ -55,6 +55,8 @@
                 let self = this;
                 self.currentPostId = post.id;
                 window.eventBus.$emit('post-edit', post);
+            },
+            save() {
             }
         }
     };
