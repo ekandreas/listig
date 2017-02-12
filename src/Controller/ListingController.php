@@ -45,5 +45,4 @@ class ListingController implements RouteInterface
 
         return $listing;
     }
-
 }
