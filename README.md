@@ -3,9 +3,9 @@ Another List Manager in WordPress.
 Editorial plugin to manage custom post lists.
 
 ## WIP
-Version *0.0.6*
+Version *0.1*
 
-This plugin is not yet released and will not be working in production environment.
+This is a plugin in beta phase. A lot of work in progress.
 
 As development environment we use another repo at [Github](https://github.com/ekandreas/listig.app).
 
