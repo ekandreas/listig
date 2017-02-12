@@ -5,7 +5,7 @@
 
 // TODO: Always check for function_exists!
 
-if(!function_exists('listig')) {
+if (!function_exists('listig')) {
 
     /**
      * Returns a list of posts (id, headline, excerpt, image) from a list id
@@ -13,9 +13,10 @@ if(!function_exists('listig')) {
      * @param $id
      * @return array
      */
-    function listig($id) {
+    function listig($id)
+    {
         $listig = \EkAndreas\Listig\Model\ListingModel::get($id);
-        if($listig && $listig->posts) {
+        if ($listig && $listig->posts) {
             return $listig->posts;
         }
         return [];
