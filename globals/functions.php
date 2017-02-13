@@ -15,6 +15,7 @@ if (!function_exists('listig')) {
      */
     function listig($id)
     {
+        $id = (int)$id;
         $listig = \EkAndreas\Listig\Model\ListingModel::get($id);
         if ($listig && $listig->posts) {
             return $listig->posts;
