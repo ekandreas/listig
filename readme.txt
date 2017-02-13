@@ -3,7 +3,7 @@ Contributors: ekandreas
 Tags: list-manager
 Requires at least: 4.7
 Tested up to: 4.7.2
-Stable tag: 0.2
+Stable tag: 0.2.1
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 
@@ -14,6 +14,8 @@ Listig is a list manager inside WordPress admin that gives the user possibilitie
 
 More information about the plugin and how to use it: [Github](https://github.com/ekandreas/listig)
 
+Create your lists and render the modified post items with shortcodes or use the lists in your theme development.
+
 == Installation ==
 1. Upload the contents of the zip (including the folder) to the `/wp-content/plugins/` directory
 2. Activate the plugin through the \'Plugins\' menu in WordPress
@@ -23,5 +25,7 @@ More information about the plugin and how to use it: [Github](https://github.com
 
 1. Searching your posts and order them into custom lists with possible Post Edit to create a custom pusher for rendering the posts.
 
+2. Shortcode example to render a list on a standard page without code development.
+
 == Frequently Asked Questions ==
-Not yet!
+None yet!

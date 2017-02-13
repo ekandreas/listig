@@ -5,7 +5,7 @@ Editorial plugin to manage custom post lists.
 The plugin is published at the official [WordPress plugin repository](https://wordpress.org/plugins/listig/) for download.
 
 ## Work In Progress
-Version *0.2*
+Version *0.2.1*
 
 This is a plugin in beta phase. A lot of work in progress.
 
@@ -42,8 +42,7 @@ Here is an example from a post content to render a complete list with id=236:
 
 Then you can format the shortcodes, eg set the headline to H2 and the read more link to italic.
 
-![alt text](https://github.com/ekandreas/listig/raw/master/assets/img/example-page-with-shortcode.png "Shortcode example page with Twenty Seventeen")
-
+![shortcode example](https://raw.githubusercontent.com/ekandreas/listig/master/assets/img/example-page-with-shortcodes.png "Shortcode example page with Twenty Seventeen")
 
 ## Usage in templates
 The global function `listig` accepts the ID of the list you want to loop. The ID is printed in the list settings (the gear icon).
