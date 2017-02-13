@@ -20,7 +20,6 @@ class Listig implements ShortcodeInterface
 
         if ($items) {
             foreach ($items as $key => $item) {
-
                 add_filter("listig/currentItem", function () use ($item) {
                     return $item;
                 });

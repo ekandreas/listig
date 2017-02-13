@@ -20,7 +20,9 @@ class ListigUrl implements ShortcodeInterface
 
         if ($currentItem) {
             $result = "<a href=\"{$currentItem->url}\"";
-            if ($params['target']) $result .= " target=\"{$params['target']}\"";
+            if ($params['target']) {
+                $result .= " target=\"{$params['target']}\"";
+            }
             $result .= ">{$content}</a>";
         }
 
