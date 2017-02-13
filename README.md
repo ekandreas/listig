@@ -4,8 +4,8 @@ Editorial plugin to manage custom post lists.
 
 The plugin is published at the official [WordPress plugin repository](https://wordpress.org/plugins/listig/) for download.
 
-## WIP
-Version *0.1*
+## Work In Progress
+Version *0.2*
 
 This is a plugin in beta phase. A lot of work in progress.
 
