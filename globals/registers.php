@@ -10,3 +10,11 @@ new \EkAndreas\Listig\Route\RouteService([
     EkAndreas\Listig\Controller\PostSearchController::class,
     EkAndreas\Listig\Controller\UserSettingController::class,
 ]);
+
+new \EkAndreas\Listig\Shortcode\ShortcodeService([
+    \EkAndreas\Listig\Shortcode\Listig::class,
+    \EkAndreas\Listig\Shortcode\ListigHeadline::class,
+    \EkAndreas\Listig\Shortcode\ListigExcerpt::class,
+    \EkAndreas\Listig\Shortcode\ListigUrl::class,
+    \EkAndreas\Listig\Shortcode\ListigImage::class,
+]);
