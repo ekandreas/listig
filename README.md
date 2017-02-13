@@ -19,7 +19,8 @@ The global function `listig` accepts the ID of the list you want to loop. The ID
 `listig` returns an array with posts of properties; headline, excerpt, imageId and imageUrl.
 
 A simple example to render the output from a list:
-```
+
+```php
 $posts = listig(236);
 foreach ($posts as $post) {
     ?>
