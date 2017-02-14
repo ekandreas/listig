@@ -1,5 +1,5 @@
 <template>
-    <div v-if="post.id">
+    <div v-if="post">
         <div class="box">
             <h2 class="title is-2">{{ post.headline }}</h2>
             <article class="media">

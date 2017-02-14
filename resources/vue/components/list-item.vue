@@ -2,19 +2,23 @@
     <nav class="panel">
         <p class="panel-heading">
             {{ list.name }}
-            <a class="icon pull-right gear-icon" @click="listEdit(list)">
+            <a class="icon is-pulled-right gear-icon" @click="listEdit(list)">
                 <i class="fa fa-gear"></i>
+            </a>
+            <a class="icon is-pulled-right file-icon" @click="addEmpty(list)">
+                <i class="fa fa-file-o"></i>
             </a>
         </p>
         <draggable :class="{ 'panel-block initial-area' : list.posts.length==0 }" :list="list.posts"
-                   :options="{group:'posts',animation:350}" @start="drag=true" @end="endDrag" @add="added">
+                   :options="{group:'posts',animation:350}" @add="added">
 
-            <a class="panel-block draggable-post"
-               v-for="post in list.posts"
-               @click="postEdit(post)"
-               :class="{ 'is-active': post.id==currentPostId }">
-                {{ post.headline}}
-            </a>
+            <div class="panel-block draggable-post" @click="postEdit(post)"
+                 v-for="(post,index) in list.posts" :class="{ 'is-active': selectedIndex==list.posts.indexOf(post) }">
+
+                <a class="delete is-small" @click="postRemove(post)"></a>&nbsp;&nbsp;
+                <span :class="{ 'active-post': selectedIndex==list.posts.indexOf(post) }">{{ post.headline}}</span>
+
+            </div>
         </draggable>
         <div class="panel-block" v-if="dirty">
             <div class="control">
@@ -29,7 +33,7 @@
         props: ['list'],
         data() {
             return {
-                currentPostId: 0,
+                selectedIndex: -1,
                 dirty: false,
                 drag: false,
             }
@@ -38,6 +42,9 @@
             let self = this;
             window.eventBus.$on('list-dirty', function (listId) {
                 if (listId == self.list.id) self.dirty = true;
+            });
+            window.eventBus.$on('post-selected', function (post) {
+                self.selectedIndex = self.list.posts.indexOf(post);
             });
             $(window).bind('beforeunload', function(e){
                 if(self.dirty)
@@ -50,6 +57,19 @@
             let self = this;
         },
         methods: {
+            addEmpty() {
+                let self = this;
+                self.dirty = true;
+                let newPost = {
+                    id: 0,
+                    headline: 'New post item',
+                    excerpt: '',
+                    url: ''
+                };
+                self.list.posts.push(newPost);
+                window.eventBus.$emit('post-selected', newPost);
+                window.eventBus.$emit('post-edit', {listId: self.list.id, post: newPost});
+            },
             listEdit(list) {
                 window.eventBus.$emit('list-edit', list);
             },
@@ -57,12 +77,20 @@
                 let self = this;
                 self.dirty = true;
 
-                self.currentPostId = self.list.posts[e.newIndex].id;
+                self.selectedIndex = [e.newIndex];
+                window.eventBus.$emit('post-selected', self.list.posts[e.newIndex]);
             },
             postEdit(post) {
                 let self = this;
-                self.currentPostId = post.id;
+                window.eventBus.$emit('post-selected', post);
                 window.eventBus.$emit('post-edit', {listId: self.list.id, post: post});
+            },
+            postRemove(post) {
+                let self = this;
+                window.eventBus.$emit('post-selected', null);
+                let index = self.list.posts.indexOf(post);
+                self.list.posts.splice(index, 1);
+                self.dirty = true;
             },
             save() {
                 let self = this;
@@ -73,9 +101,10 @@
                         window.eventBus.$emit('list-rebound', self.list.id);
                     });
             },
-            endDrag() {
+            listChanged(e) {
                 let self = this;
                 self.dirty = true;
+                window.eventBus.$emit('post-selected', self.list.posts[e.newIndex]);
             }
         }
     };
@@ -86,11 +115,20 @@
         cursor: move;
     }
 
+    .file-icon {
+        margin-right: 10px;
+        color: #999;
+    }
+
     .gear-icon {
         color: #999;
     }
 
     .initial-area {
         min-height: 40px;
+    }
+
+    .active-post {
+        font-weight: bolder;
     }
 </style>
