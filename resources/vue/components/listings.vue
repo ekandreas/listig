@@ -6,7 +6,7 @@
 
 <script>
 
-    module.exports = {
+    export default {
         data() {
             return {
                 lists: []
