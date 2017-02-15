@@ -12573,6 +12573,10 @@ module.exports = {
     },
 
     methods: {
+        focusOnPost: function focusOnPost(post) {
+            window.eventBus.$emit('post-selected', post);
+            window.eventBus.$emit('post-edit', { listId: self.id, post: post });
+        },
         addEmpty: function addEmpty() {
             var self = this;
             self.dirty = true;
@@ -12580,8 +12584,7 @@ module.exports = {
                 headline: 'New post item'
             };
             self.posts.push(newPost);
-            window.eventBus.$emit('post-selected', newPost);
-            window.eventBus.$emit('post-edit', { listId: self.id, post: newPost });
+            self.focusOnPost(newPost);
         },
         listEdit: function listEdit() {
             var self = this;
@@ -12590,15 +12593,11 @@ module.exports = {
         dragAdded: function dragAdded(e) {
             var self = this;
             self.dirty = true;
-
-            var post = self.posts[e.newIndex];
-            window.eventBus.$emit('post-edit', { listId: self.id, post: post });
-            window.eventBus.$emit('post-selected', post);
+            self.focusOnPost(self.posts[e.newIndex]);
         },
         postEdit: function postEdit(post) {
             var self = this;
-            window.eventBus.$emit('post-selected', post);
-            window.eventBus.$emit('post-edit', { listId: self.id, post: post });
+            self.focusOnPost(post);
         },
         postRemove: function postRemove(post) {
             var self = this;
@@ -12618,9 +12617,7 @@ module.exports = {
         dragEnded: function dragEnded(e) {
             var self = this;
             self.dirty = true;
-            var post = self.posts[e.newIndex];
-            window.eventBus.$emit('post-selected', post);
-            window.eventBus.$emit('post-edit', { listId: self.id, post: post });
+            self.focusOnPost(self.posts[e.newIndex]);
         }
     }
 };

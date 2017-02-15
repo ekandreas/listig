@@ -66,6 +66,10 @@
                 });
         },
         methods: {
+            focusOnPost(post) {
+                window.eventBus.$emit('post-selected', post);
+                window.eventBus.$emit('post-edit', {listId: self.id, post: post});
+            },
             addEmpty() {
                 let self = this;
                 self.dirty = true;
@@ -73,8 +77,7 @@
                     headline: 'New post item'
                 };
                 self.posts.push(newPost);
-                window.eventBus.$emit('post-selected', newPost);
-                window.eventBus.$emit('post-edit', {listId: self.id, post: newPost});
+                self.focusOnPost(newPost);
             },
             listEdit() {
                 let self = this;
@@ -83,15 +86,11 @@
             dragAdded(e) {
                 let self = this;
                 self.dirty = true;
-
-                let post = self.posts[e.newIndex];
-                window.eventBus.$emit('post-edit', {listId: self.id, post: post});
-                window.eventBus.$emit('post-selected', post);
+                self.focusOnPost(self.posts[e.newIndex]);
             },
             postEdit(post) {
                 let self = this;
-                window.eventBus.$emit('post-selected', post);
-                window.eventBus.$emit('post-edit', {listId: self.id, post: post});
+                self.focusOnPost(post);
             },
             postRemove(post) {
                 let self = this;
@@ -112,9 +111,7 @@
             dragEnded(e) {
                 let self = this;
                 self.dirty = true;
-                let post = self.posts[e.newIndex];
-                window.eventBus.$emit('post-selected', post);
-                window.eventBus.$emit('post-edit', {listId: self.id, post: post});
+                self.focusOnPost(self.posts[e.newIndex]);
             }
         }
     };
