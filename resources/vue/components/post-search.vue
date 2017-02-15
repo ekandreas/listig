@@ -87,8 +87,9 @@
 </template>
 
 <script>
-    module.exports = {
-        mounted: function () {
+    export default {
+
+        mounted() {
             let self = this;
             axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
             axios.get(listig.restUrl + '/author')
@@ -101,7 +102,7 @@
                 });
             self.search();
         },
-        data: function () {
+        data() {
             return {
                 currentPostId: 0,
                 searchTimer: 0,
@@ -120,13 +121,13 @@
             }
         },
         methods: {
-            search: function (noReset) {
+            search(noReset) {
                 let self = this;
                 self.form.page = 1;
                 self.maxPages = 1;
                 self.queryForm();
             },
-            queryForm: function () {
+            queryForm() {
                 let self = this;
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.post(listig.restUrl + '/post-search', self.form)
@@ -136,7 +137,7 @@
                         self.form.page = response.data.query.query.paged;
                     });
             },
-            searchBounce: function () {
+            searchBounce() {
                 let self = this;
 
                 clearTimeout(self.searchTimer);
@@ -144,7 +145,7 @@
                     self.search();
                 }.bind(this), 300);
             },
-            changePostsPerPage: function () {
+            changePostsPerPage() {
                 let self = this;
 
                 let fields = [
@@ -158,12 +159,12 @@
                         self.search();
                     });
             },
-            next: function () {
+            next() {
                 let self = this;
                 self.form.page++;
                 self.queryForm();
             },
-            previous: function () {
+            previous() {
                 let self = this;
                 self.form.page--;
                 self.queryForm();

@@ -9,15 +9,15 @@
 
         <div class="columns">
 
-            <div class="column">
+            <div class="column is-3">
                 <post-search></post-search>
             </div>
 
-            <div class="column">
+            <div class="column is-3">
                 <listings></listings>
             </div>
 
-            <div class="column">
+            <div class="column is-6">
                 <post-edit></post-edit>
             </div>
 
