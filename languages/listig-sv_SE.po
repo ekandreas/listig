@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Listig\n"
-"POT-Creation-Date: 2017-02-12 20:29+0100\n"
-"PO-Revision-Date: 2017-02-12 20:30+0100\n"
+"POT-Creation-Date: 2017-02-15 18:14+0100\n"
+"PO-Revision-Date: 2017-02-15 18:15+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -19,6 +19,12 @@ msgstr ""
 "_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: listig.php:24
+msgid ""
+"Plugin \"listig\" requires at least PHP7. Please upgrade PHP or inactivate "
+"the plugin!"
+msgstr ""
 
 #: src/Language/Script.php:9
 #, fuzzy
@@ -120,6 +126,14 @@ msgstr "Ta bort bild"
 #: src/Language/Script.php:33
 msgid "Change image"
 msgstr "Ändra bild"
+
+#: src/Language/Script.php:34
+msgid "Hide list"
+msgstr "Göm lista"
+
+#: src/Language/Script.php:35
+msgid "Url"
+msgstr "Webbadress"
 
 #. Plugin Name of the plugin/theme
 msgid "Listig"
