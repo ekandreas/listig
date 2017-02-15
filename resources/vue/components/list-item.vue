@@ -1,22 +1,22 @@
 <template>
     <nav class="panel">
         <p class="panel-heading">
-            {{ list.name }}
-            <a class="icon is-pulled-right gear-icon" @click="listEdit(list)">
+            {{ name }}&nbsp;
+            <a class="icon is-pulled-right gear-icon" @click="listEdit">
                 <i class="fa fa-gear"></i>
             </a>
-            <a class="icon is-pulled-right file-icon" @click="addEmpty(list)">
+            <a class="icon is-pulled-right file-icon" @click="addEmpty">
                 <i class="fa fa-file-o"></i>
             </a>
         </p>
-        <draggable :class="{ 'panel-block initial-area' : list.posts.length==0 }" :list="list.posts"
-                   :options="{group:'posts',animation:350}" @add="added">
+        <draggable :class="{ 'panel-block initial-area' : posts.length==0 }" :list="posts"
+                   :options="{group:'posts',animation:350}" @add="added" @end="dragEnded">
 
             <div class="panel-block draggable-post" @click="postEdit(post)"
-                 v-for="(post,index) in list.posts" :class="{ 'is-active': selectedIndex==list.posts.indexOf(post) }">
+                 v-for="(post,index) in posts" :class="{ 'is-active': selectedIndex==posts.indexOf(post) }">
 
                 <a class="delete is-small" @click="postRemove(post)"></a>&nbsp;&nbsp;
-                <span :class="{ 'active-post': selectedIndex==list.posts.indexOf(post) }">{{ post.headline}}</span>
+                <span :class="{ 'active-post': selectedIndex==posts.indexOf(post) }">{{ post.headline}}</span>
 
             </div>
         </draggable>
@@ -30,9 +30,11 @@
 
 <script>
     module.exports = {
-        props: ['list'],
+        props: ['id'],
         data() {
             return {
+                name: '',
+                posts: [],
                 selectedIndex: -1,
                 dirty: false,
                 drag: false,
@@ -41,70 +43,77 @@
         created() {
             let self = this;
             window.eventBus.$on('list-dirty', function (listId) {
-                if (listId == self.list.id) self.dirty = true;
+                if (listId == self.id) self.dirty = true;
             });
             window.eventBus.$on('post-selected', function (post) {
-                self.selectedIndex = self.list.posts.indexOf(post);
+                self.selectedIndex = self.posts.indexOf(post);
             });
-            $(window).bind('beforeunload', function(e){
-                if(self.dirty)
-                    return "Unsaved changes in list " + self.list.name;
+            $(window).bind('beforeunload', function (e) {
+                if (self.dirty)
+                    return "Unsaved changes in list " + self.name;
                 else
-                    e=null; // i.e; if form state change show warning box, else don't show it.
+                    e = null; // i.e; if form state change show warning box, else don't show it.
             });
         },
         mounted() {
             let self = this;
+            axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
+            axios.get(`${listig.restUrl}/listing/${self.id}`)
+                .then(function (response) {
+                    self.dirty = false;
+                    self.name = response.data.name;
+                    self.posts = response.data.posts;
+                });
         },
         methods: {
             addEmpty() {
                 let self = this;
                 self.dirty = true;
                 let newPost = {
-                    id: 0,
-                    headline: 'New post item',
-                    excerpt: '',
-                    url: ''
+                    headline: 'New post item'
                 };
-                self.list.posts.push(newPost);
+                self.posts.push(newPost);
                 window.eventBus.$emit('post-selected', newPost);
-                window.eventBus.$emit('post-edit', {listId: self.list.id, post: newPost});
+                window.eventBus.$emit('post-edit', {listId: self.id, post: newPost});
             },
-            listEdit(list) {
-                window.eventBus.$emit('list-edit', list);
+            listEdit() {
+                let self = this;
+                window.eventBus.$emit('list-edit', self.id);
             },
             added(e) {
                 let self = this;
                 self.dirty = true;
 
                 self.selectedIndex = [e.newIndex];
-                window.eventBus.$emit('post-selected', self.list.posts[e.newIndex]);
+                window.eventBus.$emit('post-selected', self.posts[e.newIndex]);
             },
             postEdit(post) {
                 let self = this;
                 window.eventBus.$emit('post-selected', post);
-                window.eventBus.$emit('post-edit', {listId: self.list.id, post: post});
+                window.eventBus.$emit('post-edit', {listId: self.id, post: post});
             },
             postRemove(post) {
                 let self = this;
                 window.eventBus.$emit('post-selected', null);
-                let index = self.list.posts.indexOf(post);
-                self.list.posts.splice(index, 1);
+                let index = self.posts.indexOf(post);
+                self.posts.splice(index, 1);
                 self.dirty = true;
             },
             save() {
                 let self = this;
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
-                axios.post(`${listig.restUrl}/listing/${self.list.id}/posts`, self.list)
+                axios.post(`${listig.restUrl}/listing/${self.id}/posts`, self.posts)
                     .then(function (response) {
                         self.dirty = false;
-                        window.eventBus.$emit('list-rebound', self.list.id);
+                        window.eventBus.$emit('list-rebound', self.id);
                     });
             },
-            listChanged(e) {
+            dragEnded(e) {
                 let self = this;
                 self.dirty = true;
-                window.eventBus.$emit('post-selected', self.list.posts[e.newIndex]);
+                let post = self.posts[e.newIndex];
+                window.eventBus.$emit('post-selected', post);
+                window.eventBus.$emit('post-edit', {listId: self.id, post: post});
             }
         }
     };

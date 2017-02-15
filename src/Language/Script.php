@@ -31,6 +31,7 @@ class Script
             'addImageLabel' => __('Add image', 'listig'),
             'removeImageLabel' => __('Remove image', 'listig'),
             'changeImageLabel' => __('Change image', 'listig'),
+            'hideListLabel' => __('Hide list', 'listig'),
         ];
     }
 }

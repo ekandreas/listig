@@ -19,6 +19,7 @@
     "laravel-mix": "^0.*",
     "moment": "^2.*",
     "vue": "^2.*",
+    "vue-bulma-modal": "^1.0.1",
     "vuedraggable": "^2.*"
   }
 }

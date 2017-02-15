@@ -1,19 +1,18 @@
 <template>
-    <draggable :list="listings"
-               :options="{group:'listings',animation:350}" @start="drag=true" @end="drag=false">
-        <list-item v-for="list in listings" :list="list" :key="list.id"></list-item>
-    </draggable>
+    <div>
+        <list-item v-for="list in listings" :id="list.id"></list-item>
+    </div>
 </template>
 
 <script>
 
     module.exports = {
-        data: function () {
+        data() {
             return {
                 listings: []
             }
         },
-        created: function () {
+        created() {
             let self = this;
             window.eventBus.$on('list-rebound', function (listId) {
                 if (listId) {
@@ -24,7 +23,7 @@
                 }
             });
         },
-        mounted: function () {
+        mounted() {
             let self = this;
             self.getAll();
         },
