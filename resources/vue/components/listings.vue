@@ -1,6 +1,6 @@
 <template>
     <div>
-        <list-item v-for="list in listings" :id="list.id"></list-item>
+        <list-item v-for="list in lists" :id="list" :key="list"></list-item>
     </div>
 </template>
 
@@ -9,7 +9,7 @@
     module.exports = {
         data() {
             return {
-                listings: []
+                lists: []
             }
         },
         created() {
@@ -33,16 +33,9 @@
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.get(listig.restUrl + '/listing')
                     .then(function (response) {
-                        if(self.listings.length) {
-                            response.data.forEach(function (currentList, index) {
-                                if (self.listIndex(currentList.id)<0) {
-                                    self.listings.unshift(currentList);
-                                }
-                            });
-                        }
-                        else {
-                            self.listings = response.data;
-                        }
+                        response.data.forEach(function(list) {
+                            self.lists.push(list.id);
+                        });
                     });
             },
             getSingle(listId) {
@@ -50,29 +43,21 @@
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.get(`${listig.restUrl}/listing/${listId}`)
                     .then(function (response) {
-                        let position = self.listIndex(listId);
-                        if(response.data==null) {
-                            self.listings.splice(position,1);
+
+                        let index = self.lists.indexOf(listId);
+
+                        if(index<0) {
+                            self.lists.unshift(response.data.id);
+                            return;
                         }
-                        else if(position<0) {
-                            self.listings.unshift(response.data);
+
+                        if(!response.data) {
+                            self.lists.splice(index,1);
+                            return;
                         }
-                        else {
-                            self.listings[position] = response.data;
-                        }
+
+                        self.lists[index] = response.data;
                     });
-            },
-            listIndex(listId) {
-                let self = this;
-                for(let i=0;i<self.listings.length;i++) {
-                    if (self.listings[i].id == listId) {
-                        return i;
-                    }
-                }
-                return -1;
-            },
-            edit(list) {
-                window.eventBus.$emit('list-edit', list);
             }
         }
     };

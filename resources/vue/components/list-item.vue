@@ -1,5 +1,5 @@
 <template>
-    <nav class="panel">
+    <nav class="panel" v-if="id>0">
         <p class="panel-heading">
             {{ name }}&nbsp;
             <a class="icon is-pulled-right gear-icon" @click="listEdit">
@@ -67,6 +67,7 @@
         },
         methods: {
             focusOnPost(post) {
+                let self = this;
                 window.eventBus.$emit('post-selected', post);
                 window.eventBus.$emit('post-edit', {listId: self.id, post: post});
             },

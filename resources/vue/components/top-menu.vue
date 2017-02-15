@@ -51,8 +51,7 @@
             newList: function() {
                 let self = this;
 
-                window.eventBus.$emit('list-edit');
-                //self.$refs.editList.edit();
+                window.eventBus.$emit('list-edit', 0);
             }
         }
     };

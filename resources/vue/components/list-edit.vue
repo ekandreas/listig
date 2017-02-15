@@ -71,14 +71,19 @@
             edit(listId) {
                 let self = this;
 
+                self.clearForm();
+
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.get(`${listig.restUrl}/listing/${listId}`)
                     .then(function (response) {
-                        self.form.id = response.data.id;
-                        self.form.name = response.data.name;
-                        self.form.description = response.data.description;
-                        self.form.private = response.data.private;
-                        self.form.posts = response.data.posts;
+
+                        if(response.data) {
+                            self.form.id = response.data.id;
+                            self.form.name = response.data.name;
+                            self.form.description = response.data.description;
+                            self.form.private = response.data.private;
+                            self.form.posts = response.data.posts;
+                        }
 
                         self.moduleClass = 'modal is-active';
                         setTimeout(function () {
@@ -100,12 +105,9 @@
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.post(listig.restUrl + '/listing/' + self.form.id, self.form)
                     .then(function (response) {
-                        self.form.name = '';
-                        self.form.description = '';
-                        self.form.private = false;
-                        self.form.posts = [];
-                        window.eventBus.$emit('list-rebound', response.data.id);
                         self.close();
+                        self.clearForm();
+                        window.eventBus.$emit('list-rebound', response.data.id);
                     });
             },
             destroy() {
@@ -114,9 +116,19 @@
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.delete(listig.restUrl + '/listing/' + self.form.id)
                     .then(function (response) {
-                        window.eventBus.$emit('list-rebound', self.form.id);
                         self.close();
+                        window.eventBus.$emit('list-hide', self.form.id);
+                        window.eventBus.$emit('list-rebound', self.form.id);
                     });
+            },
+            clearForm() {
+                let self = this;
+
+                self.form.id = 0;
+                self.form.name = '';
+                self.form.description = '';
+                self.form.private = false;
+                self.form.posts = [];
             }
         }
     };
