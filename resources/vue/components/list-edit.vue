@@ -1,6 +1,6 @@
 <template>
     <div :class="moduleClass">
-        <div class="modal-background"></div>
+        <div class="modal-background" @click="close"></div>
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">{{ lang.editLabel }} {{ form.id }}</p>
@@ -36,6 +36,7 @@
             <footer class="modal-card-foot">
                 <a class="button is-success" @click="save">{{ lang.saveLabel }}</a>
                 <a class="button" @click="close">{{ lang.cancelLabel }}</a>
+                <a class="button is-warning" @click="hide">{{ lang.hideListLabel }}</a>
                 <a class="button is-danger" @click="destroy">{{ lang.destroyLabel }}</a>
             </footer>
         </div>
@@ -43,17 +44,17 @@
 </template>
 
 <script>
-    module.exports = {
-        mounted: function () {
+    export default {
+        mounted() {
             let self = this;
         },
-        created: function () {
+        created() {
             let self = this;
-            window.eventBus.$on('list-edit', function (list) {
-                self.edit(list);
+            window.eventBus.$on('list-edit', function (listId) {
+                self.edit(listId);
             });
         },
-        data: function () {
+        data() {
             return {
                 moduleClass: 'modal',
                 form: {
@@ -67,26 +68,34 @@
             }
         },
         methods: {
-            edit: function (list) {
+            edit(listId) {
                 let self = this;
 
-                self.form.id = list ? list.id : 0;
-                self.form.name = list ? list.name : '';
-                self.form.description = list ? list.description : '';
-                self.form.private = list ? list.private : false;
-                self.form.posts = list ? list.posts : [];
+                axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
+                axios.get(`${listig.restUrl}/listing/${listId}`)
+                    .then(function (response) {
+                        self.form.id = response.data.id;
+                        self.form.name = response.data.name;
+                        self.form.description = response.data.description;
+                        self.form.private = response.data.private;
+                        self.form.posts = response.data.posts;
 
-                self.moduleClass = 'modal is-active';
-                setTimeout(function () {
-                    self.$refs.editName.focus();
-                }, 500);
+                        self.moduleClass = 'modal is-active';
+                        setTimeout(function () {
+                            self.$refs.editName.focus();
+                        }, 500);
+                    });
             },
-            close: function () {
+            close() {
                 let self = this;
 
                 self.moduleClass = 'modal';
             },
-            save: function () {
+            hide() {
+                let self = this;
+                self.close();
+            },
+            save() {
                 let self = this;
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.post(listig.restUrl + '/listing/' + self.form.id, self.form)
@@ -96,17 +105,17 @@
                         self.form.private = false;
                         self.form.posts = [];
                         window.eventBus.$emit('list-rebound', response.data.id);
-                        self.moduleClass = 'modal';
+                        self.close();
                     });
             },
-            destroy: function () {
+            destroy() {
                 let self = this;
 
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
                 axios.delete(listig.restUrl + '/listing/' + self.form.id)
                     .then(function (response) {
                         window.eventBus.$emit('list-rebound', self.form.id);
-                        self.moduleClass = 'modal';
+                        self.close();
                     });
             }
         }

@@ -1,20 +1,24 @@
 <template>
     <nav class="panel">
         <p class="panel-heading">
-            {{ list.name }}
-            <a class="icon pull-right gear-icon" @click="listEdit(list)">
+            {{ name }}&nbsp;
+            <a class="icon is-pulled-right gear-icon" @click="listEdit">
                 <i class="fa fa-gear"></i>
             </a>
-        </p>
-        <draggable :class="{ 'panel-block initial-area' : list.posts.length==0 }" :list="list.posts"
-                   :options="{group:'posts',animation:350}" @start="drag=true" @end="endDrag" @add="added">
-
-            <a class="panel-block draggable-post"
-               v-for="post in list.posts"
-               @click="postEdit(post)"
-               :class="{ 'is-active': post.id==currentPostId }">
-                {{ post.headline}}
+            <a class="icon is-pulled-right file-icon" @click="addEmpty">
+                <i class="fa fa-file-o"></i>
             </a>
+        </p>
+        <draggable :class="{ 'panel-block initial-area' : posts.length==0 }" :list="posts"
+                   :options="{group:'posts',animation:350}" @add="dragAdded" @end="dragEnded">
+
+            <div class="panel-block draggable-post" @click="postEdit(post)"
+                 v-for="(post,index) in posts" :class="{ 'is-active': selectedIndex==posts.indexOf(post) }">
+
+                <a class="delete is-small" @click="postRemove(post)"></a>&nbsp;&nbsp;
+                <span :class="{ 'active-post': selectedIndex==posts.indexOf(post) }">{{ post.headline}}</span>
+
+            </div>
         </draggable>
         <div class="panel-block" v-if="dirty">
             <div class="control">
@@ -26,10 +30,12 @@
 
 <script>
     module.exports = {
-        props: ['list'],
+        props: ['id'],
         data() {
             return {
-                currentPostId: 0,
+                name: '',
+                posts: [],
+                selectedIndex: -1,
                 dirty: false,
                 drag: false,
             }
@@ -37,45 +43,75 @@
         created() {
             let self = this;
             window.eventBus.$on('list-dirty', function (listId) {
-                if (listId == self.list.id) self.dirty = true;
+                if (listId == self.id) self.dirty = true;
             });
-            $(window).bind('beforeunload', function(e){
-                if(self.dirty)
-                    return "Unsaved changes in list " + self.list.name;
+            window.eventBus.$on('post-selected', function (post) {
+                self.selectedIndex = self.posts.indexOf(post);
+            });
+            $(window).bind('beforeunload', function (e) {
+                if (self.dirty)
+                    return "Unsaved changes in list " + self.name;
                 else
-                    e=null; // i.e; if form state change show warning box, else don't show it.
+                    e = null; // i.e; if form state change show warning box, else don't show it.
             });
         },
         mounted() {
             let self = this;
+            axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
+            axios.get(`${listig.restUrl}/listing/${self.id}`)
+                .then(function (response) {
+                    self.dirty = false;
+                    self.name = response.data.name;
+                    self.posts = response.data.posts;
+                });
         },
         methods: {
-            listEdit(list) {
-                window.eventBus.$emit('list-edit', list);
+            focusOnPost(post) {
+                window.eventBus.$emit('post-selected', post);
+                window.eventBus.$emit('post-edit', {listId: self.id, post: post});
             },
-            added(e) {
+            addEmpty() {
                 let self = this;
                 self.dirty = true;
-
-                self.currentPostId = self.list.posts[e.newIndex].id;
+                let newPost = {
+                    headline: 'New post item'
+                };
+                self.posts.push(newPost);
+                self.focusOnPost(newPost);
+            },
+            listEdit() {
+                let self = this;
+                window.eventBus.$emit('list-edit', self.id);
+            },
+            dragAdded(e) {
+                let self = this;
+                self.dirty = true;
+                self.focusOnPost(self.posts[e.newIndex]);
             },
             postEdit(post) {
                 let self = this;
-                self.currentPostId = post.id;
-                window.eventBus.$emit('post-edit', {listId: self.list.id, post: post});
+                self.focusOnPost(post);
+            },
+            postRemove(post) {
+                let self = this;
+                window.eventBus.$emit('post-selected', null);
+                let index = self.posts.indexOf(post);
+                self.posts.splice(index, 1);
+                self.dirty = true;
             },
             save() {
                 let self = this;
                 axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
-                axios.post(`${listig.restUrl}/listing/${self.list.id}/posts`, self.list)
+                axios.post(`${listig.restUrl}/listing/${self.id}/posts`, self.posts)
                     .then(function (response) {
                         self.dirty = false;
-                        window.eventBus.$emit('list-rebound', self.list.id);
+                        //window.eventBus.$emit('list-rebound', self.id);
                     });
             },
-            endDrag() {
+            dragEnded(e) {
                 let self = this;
                 self.dirty = true;
+                self.focusOnPost(self.posts[e.newIndex]);
             }
         }
     };
@@ -86,11 +122,20 @@
         cursor: move;
     }
 
+    .file-icon {
+        margin-right: 10px;
+        color: #999;
+    }
+
     .gear-icon {
         color: #999;
     }
 
     .initial-area {
         min-height: 40px;
+    }
+
+    .active-post {
+        font-weight: bolder;
     }
 </style>

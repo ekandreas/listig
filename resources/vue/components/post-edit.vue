@@ -1,5 +1,5 @@
 <template>
-    <div v-if="post.id">
+    <div v-if="post">
         <div class="box">
             <h2 class="title is-2">{{ post.headline }}</h2>
             <article class="media">
@@ -32,6 +32,15 @@
                               :placeholder="lang.excerptLabel"
                               v-on:keyup="changed(post)"
                               v-model="post.excerpt"></textarea>
+                </div>
+            </div>
+            <div class="panel-block">
+                <div class="control">
+                    <input class="input"
+                           type="text"
+                           :placeholder="lang.urlLabel"
+                           v-on:keyup="changed(post)"
+                           v-model="post.url"/>
                 </div>
             </div>
             <div class="panel-block">
