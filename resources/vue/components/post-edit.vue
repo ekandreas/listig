@@ -57,11 +57,6 @@
                         {{ lang.removeImageLabel }}
                     </button>
                 </div>
-                <div class="control">
-                    <input class="input"
-                           type="text"
-                           v-model="post.imageUrl"/>
-                </div>
             </div>
             <div class="panel-block" v-if="dirty">
                 <div class="control">
