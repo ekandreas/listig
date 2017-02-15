@@ -3,7 +3,7 @@
 Plugin Name: Listig
 Plugin URI:  https://github.com/ekandreas/listig/
 Description: List Manager
-Version:     0.2.4
+Version:     0.2.5
 Author:      Andreas Ek
 Author URI:  https://www.elseif.se/
 License:     MIT
