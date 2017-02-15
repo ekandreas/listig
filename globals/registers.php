@@ -9,6 +9,7 @@ new \EkAndreas\Listig\Route\RouteService([
     EkAndreas\Listig\Controller\PostTypeController::class,
     EkAndreas\Listig\Controller\PostSearchController::class,
     EkAndreas\Listig\Controller\UserSettingController::class,
+    \EkAndreas\Listig\Controller\HelperController::class,
 ]);
 
 new \EkAndreas\Listig\Shortcode\ShortcodeService([

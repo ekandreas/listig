@@ -57,6 +57,11 @@
                         {{ lang.removeImageLabel }}
                     </button>
                 </div>
+                <div class="control">
+                    <input class="input"
+                           type="text"
+                           v-model="post.imageUrl"/>
+                </div>
             </div>
             <div class="panel-block" v-if="dirty">
                 <div class="control">
@@ -76,7 +81,6 @@
                 currentListId: 0,
                 post: {},
                 file_frame: null,
-                wp_media_post_id: 0,
                 lang: listig.lang
             }
         },
@@ -100,29 +104,28 @@
             changeImage() {
                 let self = this;
 
-                self.wp_media_post_id = wp.media.model.settings.post.id;
                 if (self.file_frame) {
-                    self.file_frame.uploader.uploader.param('post_id', self.post.id);
                     self.file_frame.open();
                     return;
-                } else {
-                    wp.media.model.settings.post.id = self.post.id;
                 }
 
                 self.file_frame = wp.media.frames.file_frame = wp.media({
-                    title: jQuery(this).data('uploader_title'),
+                    title: self.post.name,
                     button: {
-                        text: jQuery(this).data('uploader_button_text'),
+                        text: self.lang.selectAttachmentLabel,
                     },
                     multiple: false
                 });
 
                 self.file_frame.on('select', function () {
-                    attachment = self.file_frame.state().get('selection').first().toJSON();
-                    self.post.imageId = attachment.id;
-                    self.post.imageUrl = attachment.url;
+                    let imageId = self.file_frame.state().get('selection').first().id;
+                    axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
+                    axios.get(`${listig.restUrl}/helper/attachment/url/${imageId}`)
+                        .then(function (response) {
+                            self.post.imageId = imageId;
+                            self.post.imageUrl = response.data;
+                        });
                     window.eventBus.$emit('list-dirty', self.currentListId);
-                    wp.media.model.settings.post.id = self.wp_media_post_id;
                 });
 
                 self.file_frame.open();
