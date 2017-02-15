@@ -36,6 +36,15 @@
             </div>
             <div class="panel-block">
                 <div class="control">
+                    <input class="input"
+                           type="text"
+                           :placeholder="lang.urlLabel"
+                           v-on:keyup="changed(post)"
+                           v-model="post.url"/>
+                </div>
+            </div>
+            <div class="panel-block">
+                <div class="control">
                     <button class="button" @click="changeImage">
                         <span v-if="post.imageUrl">
                             {{ lang.changeImageLabel }}

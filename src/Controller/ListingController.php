@@ -43,10 +43,11 @@ class ListingController implements RouteInterface
 
     public function savePosts(\WP_REST_Request $request)
     {
+        $id = (int)$request->get_param('id');
         $params = $request->get_json_params();
 
-        $listing = new ListingModel((int)$params['id']);
-        $listing->posts = $params['posts'];
+        $listing = new ListingModel($id);
+        $listing->posts = isset($params) ? $params : [];
         $listing->save();
 
         return $listing;

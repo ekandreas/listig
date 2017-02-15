@@ -10,7 +10,7 @@
             </a>
         </p>
         <draggable :class="{ 'panel-block initial-area' : posts.length==0 }" :list="posts"
-                   :options="{group:'posts',animation:350}" @add="added" @end="dragEnded">
+                   :options="{group:'posts',animation:350}" @add="dragAdded" @end="dragEnded">
 
             <div class="panel-block draggable-post" @click="postEdit(post)"
                  v-for="(post,index) in posts" :class="{ 'is-active': selectedIndex==posts.indexOf(post) }">
@@ -80,12 +80,13 @@
                 let self = this;
                 window.eventBus.$emit('list-edit', self.id);
             },
-            added(e) {
+            dragAdded(e) {
                 let self = this;
                 self.dirty = true;
 
-                self.selectedIndex = [e.newIndex];
-                window.eventBus.$emit('post-selected', self.posts[e.newIndex]);
+                let post = self.posts[e.newIndex];
+                window.eventBus.$emit('post-edit', {listId: self.id, post: post});
+                window.eventBus.$emit('post-selected', post);
             },
             postEdit(post) {
                 let self = this;
@@ -105,7 +106,7 @@
                 axios.post(`${listig.restUrl}/listing/${self.id}/posts`, self.posts)
                     .then(function (response) {
                         self.dirty = false;
-                        window.eventBus.$emit('list-rebound', self.id);
+                        //window.eventBus.$emit('list-rebound', self.id);
                     });
             },
             dragEnded(e) {

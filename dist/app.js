@@ -12587,12 +12587,13 @@ module.exports = {
             var self = this;
             window.eventBus.$emit('list-edit', self.id);
         },
-        added: function added(e) {
+        dragAdded: function dragAdded(e) {
             var self = this;
             self.dirty = true;
 
-            self.selectedIndex = [e.newIndex];
-            window.eventBus.$emit('post-selected', self.posts[e.newIndex]);
+            var post = self.posts[e.newIndex];
+            window.eventBus.$emit('post-edit', { listId: self.id, post: post });
+            window.eventBus.$emit('post-selected', post);
         },
         postEdit: function postEdit(post) {
             var self = this;
@@ -12611,7 +12612,7 @@ module.exports = {
             axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;
             axios.post(listig.restUrl + '/listing/' + self.id + '/posts', self.posts).then(function (response) {
                 self.dirty = false;
-                window.eventBus.$emit('list-rebound', self.id);
+                //window.eventBus.$emit('list-rebound', self.id);
             });
         },
         dragEnded: function dragEnded(e) {
@@ -12708,6 +12709,15 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -13318,7 +13328,7 @@ exports = module.exports = __webpack_require__(1)();
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -15375,7 +15385,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     },
     on: {
-      "add": _vm.added,
+      "add": _vm.dragAdded,
       "end": _vm.dragEnded
     }
   }, _vm._l((_vm.posts), function(post, index) {
@@ -15504,6 +15514,34 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.post.excerpt = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-block"
+  }, [_c('div', {
+    staticClass: "control"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.post.url),
+      expression: "post.url"
+    }],
+    staticClass: "input",
+    attrs: {
+      "type": "text",
+      "placeholder": _vm.lang.urlLabel
+    },
+    domProps: {
+      "value": _vm._s(_vm.post.url)
+    },
+    on: {
+      "keyup": function($event) {
+        _vm.changed(_vm.post)
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.post.url = $event.target.value
       }
     }
   })])]), _vm._v(" "), _c('div', {
