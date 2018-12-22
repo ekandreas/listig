@@ -15,14 +15,13 @@ class PostType implements SetupInterface
                 'labels' => $labels,
                 'public' => false,
                 'publicly_queryable' => false,
-                'show_ui' => LISTIG_POSTTYPE_VISIBLE,
-                'show_in_menu' => LISTIG_POSTTYPE_VISIBLE,
+                'show_in_rest' => true,
+                'show_ui' => true,
+                'show_in_menu' => true,
                 'supports' => [
                     'title',
                     'editor',
                     'author',
-                    'thumbnail',
-                    'excerpt',
                     'revisions'
                 ],
             ]);

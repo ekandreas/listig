@@ -6,6 +6,6 @@ class AdminMenu implements SetupInterface
 {
     public function __construct()
     {
-        add_action('admin_menu', 'EkAndreas\Listig\Menu\AdminMenu::register');
+        //add_action('admin_menu', 'EkAndreas\Listig\Menu\AdminMenu::register');
     }
 }
