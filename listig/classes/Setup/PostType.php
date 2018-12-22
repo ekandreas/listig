@@ -1,28 +1,31 @@
 <?php
+
 namespace EkAndreas\Listig\Setup;
 
-class PostType
+class PostType implements SetupInterface
 {
-    public static function register()
+    public function __construct()
     {
-        $labels = [
-            'name'               => 'Listig',
-            'singular_name'      => 'Listig',
-        ];
-        \register_post_type('listig', [
-            'labels' => $labels,
-            'public'             => false,
-            'publicly_queryable' => false,
-            'show_ui'            => LISTIG_POSTTYPE_VISIBLE,
-            'show_in_menu'       => LISTIG_POSTTYPE_VISIBLE,
-            'supports'           => [
-                                        'title',
-                                        'editor',
-                                        'author',
-                                        'thumbnail',
-                                        'excerpt',
-                                        'revisions'
-                                    ],
-        ]);
+        add_action('init', function () {
+            $labels = [
+                'name' => 'Listig',
+                'singular_name' => 'Listig',
+            ];
+            \register_post_type('listig', [
+                'labels' => $labels,
+                'public' => false,
+                'publicly_queryable' => false,
+                'show_ui' => LISTIG_POSTTYPE_VISIBLE,
+                'show_in_menu' => LISTIG_POSTTYPE_VISIBLE,
+                'supports' => [
+                    'title',
+                    'editor',
+                    'author',
+                    'thumbnail',
+                    'excerpt',
+                    'revisions'
+                ],
+            ]);
+        });
     }
 }

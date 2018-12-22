@@ -1,37 +1,42 @@
 <?php
+
 namespace EkAndreas\Listig\Setup;
 
 use EkAndreas\Listig\Menu\AdminMenu;
 use EkAndreas\Listig\Model\UserSettingModel;
 use EkAndreas\Listig\Route\Base;
 
-class Script
+class Script implements SetupInterface
 {
-    public static function register($hook)
+    public function __construct()
     {
-        if (!in_array($hook, AdminMenu::pages())) {
-            return;
-        }
+        add_action('admin_enqueue_scripts', function ($hook) {
+            if (!in_array($hook, AdminMenu::pages())) {
+                return;
+            }
 
-        wp_enqueue_media();
+            wp_enqueue_media();
 
-        $manifest = json_decode(file_get_contents(dirname(LISTING_PLUGIN_FILE).'/mix-manifest.json'), true);
+            $manifest = json_decode(file_get_contents(dirname(LISTING_PLUGIN_FILE) . '/mix-manifest.json'), true);
 
-        $pluginData = apply_filters('listig/pluginData', []);
-        $version = isset($pluginData['Version']) ? $pluginData['Version'] : uniqid();
+            $pluginData = apply_filters('listig/pluginData', []);
+            $version = isset($pluginData['Version']) ? $pluginData['Version'] : uniqid();
 
-        wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-        wp_enqueue_style('listig_css', plugins_url('listig/'.$manifest['/listig/dist/app.css']), [], $version);
+            wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+            wp_enqueue_style('listig_css', plugins_url('listig/' . $manifest['/listig/dist/app.css']), [], $version);
 
-        $data = [
-            'lang' => \EkAndreas\Listig\Language\Script::translations(),
-            'nonce' => wp_create_nonce('wp_rest'),
-            'restUrl' => Base::url,
-            'userSettings' => UserSettingModel::all(),
-        ];
+            $data = [
+                'lang' => \EkAndreas\Listig\Language\Script::translations(),
+                'nonce' => wp_create_nonce('wp_rest'),
+                'restUrl' => Base::url,
+                'userSettings' => UserSettingModel::all(),
+            ];
 
-        wp_register_script('listig_js', plugins_url('listig/'.$manifest['/listig/dist/app.js']), [], $version, true);
-        wp_localize_script('listig_js', 'listig', $data);
-        wp_enqueue_script('listig_js');
+            wp_register_script('listig_js', plugins_url('listig/' . $manifest['/listig/dist/app.js']), [], $version,
+                true);
+            wp_localize_script('listig_js', 'listig', $data);
+            wp_enqueue_script('listig_js');
+        });
+
     }
 }
