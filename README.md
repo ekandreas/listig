@@ -4,7 +4,35 @@ Editorial plugin to manage custom post lists.
 
 The plugin is published at the official [WordPress plugin repository](https://wordpress.org/plugins/listig/) for download.
 
-## Work In Progress
+
+## WORK IN PROGRESS 2018/2019
+Dockerize development and going towards Gutenberg
+
+## Docker capsuled script file
+`./docker/develop` is a "docker-compose" capsuled command with added extensions for this develop environment.
+
+## Docker setup, step by step
+1. Clone the repo to a dev folder
+1. Build the dockerfiles via the develop script, eg: `./docker/develop build`
+1. Run the script file with the init command to create a running container environment, eg: `./docker/develop init`
+
+If you want to run wp-cli commands in the container, eg: `./docker/develop wp help`
+
+Login to WordPress via `http://localhost/wp/wp-admin` with username `admin` and password `admin`.
+
+## Frontend
+Listig uses laravel-mix as a webpack wrapper.
+
+Start with `yarn` to get all dependencies. Then `yarn run watch` for continuous dev compile. Read more at [https://github.com/JeffreyWay/laravel-mix](https://github.com/JeffreyWay/laravel-mix)
+
+Note! The dist files is checked into the repo!
+
+***
+
+**DEPRECATED**
+
+
+## --old-- Work In Progress
 This is a plugin in beta phase. A lot of work in progress.
 As development environment we use another repo at [Github](https://github.com/ekandreas/listig.app).
 
