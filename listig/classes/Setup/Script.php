@@ -15,13 +15,13 @@ class Script
 
         wp_enqueue_media();
 
-        $manifest = json_decode(file_get_contents(__DIR__.'/../../mix-manifest.json'), true);
+        $manifest = json_decode(file_get_contents(dirname(LISTING_PLUGIN_FILE).'/mix-manifest.json'), true);
 
         $pluginData = apply_filters('listig/pluginData', []);
         $version = isset($pluginData['Version']) ? $pluginData['Version'] : uniqid();
 
         wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-        wp_enqueue_style('listig_css', plugins_url('listig/'.$manifest['/dist/app.css']), [], $version);
+        wp_enqueue_style('listig_css', plugins_url('listig/'.$manifest['/listig/dist/app.css']), [], $version);
 
         $data = [
             'lang' => \EkAndreas\Listig\Language\Script::translations(),
@@ -30,7 +30,7 @@ class Script
             'userSettings' => UserSettingModel::all(),
         ];
 
-        wp_register_script('listig_js', plugins_url('listig/'.$manifest['/dist/app.js']), [], $version, true);
+        wp_register_script('listig_js', plugins_url('listig/'.$manifest['/listig/dist/app.js']), [], $version, true);
         wp_localize_script('listig_js', 'listig', $data);
         wp_enqueue_script('listig_js');
     }

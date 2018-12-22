@@ -4,5 +4,5 @@
  */
 
 add_filter('listig/pluginData', function () {
-    return get_plugin_data(dirname(__DIR__) . '/listig.php', $markup = true, $translate = true);
+    return get_plugin_data(dirname(LISTING_PLUGIN_FILE) . '/listig.php', $markup = true, $translate = true);
 });

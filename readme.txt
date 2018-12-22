@@ -1,9 +1,9 @@
 === listig ===
 Contributors: ekandreas
 Tags: list-manager
-Requires at least: 4.7
-Tested up to: 4.7.2
-Stable tag: 0.2.6
+Requires at least: 5.0.2
+Tested up to: 5.0.2
+Stable tag: 0.3
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 

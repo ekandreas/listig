@@ -96,6 +96,11 @@ if [ $# -gt 0 ]; then
         app \
         wp --allow-root plugin activate listig
 
+    $COMPOSE run --rm $TTY \
+        -w /var/www/html \
+        app \
+        wp --allow-root rewrite structure '/%postname%/'
+
   # Else, pass-thru args to docker-compose
   else
     $COMPOSE "$@"

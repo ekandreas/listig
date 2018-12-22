@@ -27,12 +27,16 @@ if (PHP_VERSION<7) {
     return;
 }
 
+if (!defined('LISTIG_PLUGIN_FILE')) {
+    define('LISTING_PLUGIN_FILE', __FILE__);
+}
+
 /**
  * Namespace autoload outside of Composer to reach WordPress plugin compability without Composer
  */
-require_once 'autoload.php';
+require_once 'listig/autoload.php';
 
 /**
  * Global registrations, functions and filters
  */
-require_once 'globals/required.php';
+require_once 'listig/globals/required.php';

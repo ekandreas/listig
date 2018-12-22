@@ -4,7 +4,7 @@
  */
 spl_autoload_register(function ($class) {
     $prefix = 'EkAndreas\\Listig\\';
-    $base_dir = __DIR__ . '/src/';
+    $base_dir = __DIR__ . '/classes/';
     $len = strlen($prefix);
     if (strncmp($prefix, $class, $len) !== 0) {
         return;
