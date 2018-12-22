@@ -1,1 +1,4 @@
 .idea
+docker/bedrock
+vendor
+node_modules

@@ -87,8 +87,12 @@
 </template>
 
 <script>
-    export default {
 
+    import Draggable from 'vuedraggable';
+    export default {
+        components: {
+            'draggable': Draggable
+        },
         mounted() {
             let self = this;
             axios.defaults.headers.common['X-WP-Nonce'] = listig.nonce;

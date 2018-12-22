@@ -1,0 +1,18 @@
+version: '2.1'
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    image: joepurdy/dockpress
+    volumes:
+    - ./..:/var/www/project
+    - ./bedrock:/var/www/html
+    networks:
+    - wpnet
+  mysql:
+    image: mysql:5.7
+    volumes:
+    - mysqldata:/var/lib/mysql
+    networks:
+    - wpnet

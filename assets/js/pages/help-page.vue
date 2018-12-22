@@ -2,8 +2,8 @@
 <div class="page-frame">
 
         <top-menu :links="links"
-              showNewList="false"
-              :title="title"></top-menu>
+                  showNewList="false"
+                :title="title"></top-menu>
 
         &nbsp;<br/>
 
@@ -11,14 +11,14 @@
 </template>
 
 <script>
-    module.exports = {
+    export default {
         data() {
             return {
+                title: 'Listig - ' + listig.lang.helpTitle,
                 links: [
                     { title: 'Lists', url: '?page=listig/main'},
-                    { title: 'Help', url: '?page=listig/help'}
-                ],
-                title: 'Listig - ' + listig.lang.settingsTitle
+                    { title: 'Settings', url: '?page=listig/settings'}
+                ]
             }
         }
     };
