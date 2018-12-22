@@ -37,6 +37,5 @@ class Script implements SetupInterface
             wp_localize_script('listig_js', 'listig', $data);
             wp_enqueue_script('listig_js');
         });
-
     }
 }

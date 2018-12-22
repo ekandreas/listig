@@ -12,7 +12,7 @@ require_once 'functions.php';
 $base = "EkAndreas\\Listig\\Setup\\";
 foreach (glob(__DIR__ . "/../classes/Setup/*.php") as $file) {
     $className = pathinfo($file)['filename'];
-    if(in_array("{$base}SetupInterface", class_implements("{$base}{$className}"))) {
+    if (in_array("{$base}SetupInterface", class_implements("{$base}{$className}"))) {
         $fullClassName = "{$base}{$className}";
         new $fullClassName();
     }
