@@ -14,6 +14,7 @@ Dockerize development and going towards Gutenberg
 ## Docker setup, step by step
 1. Clone the repo to a dev folder
 1. Build the dockerfiles via the develop script, eg: `./docker/develop build`
+1. Start your containers, eg: `./docker/develop up -d`
 1. Run the script file with the init command to create a running container environment, eg: `./docker/develop init`
 
 If you want to run wp-cli commands in the container, eg: `./docker/develop wp help`
