@@ -117,33 +117,8 @@ if [ $# -gt 0 ]; then
 
   elif [ "$1" == "test" ]; then
     shift 1
-
-	# set up testing suite if it doesn't yet exist
-	if [ ! -d tests/includes ]; then
-		# set up testing suite
-		mkdir -p tests/includes
-		svn co --force --quiet https://develop.svn.wordpress.org/trunk/tests/phpunit/includes/ tests/includes
-		svn co --force --quiet https://develop.svn.wordpress.org/trunk/tests/phpunit/data/ tests/data
-	fi
-
-	if [ ! -f "tests/wp-tests-config.php" ]; then
-		download https://develop.svn.wordpress.org/trunk/wp-tests-config-sample.php tests/wp-tests-config.php
-		sed $ioption "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR':" tests/wp-tests-config.php
-		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" tests/wp-tests-config.php
-		sed $ioption "s/yourusernamehere/$DB_USER/" tests/wp-tests-config.php
-		sed $ioption "s/yourpasswordhere/$DB_PASS/" tests/wp-tests-config.php
-		sed $ioption "s|localhost|${DB_HOST}|" tests/wp-tests-config.php
-	fi
-
-    $COMPOSE run --rm $TTY \
-        -w /var/www/html \
-        app \
-        wp --allow-root plugin activate listig
-
-    $COMPOSE run --rm $TTY \
-        -w /var/www/html/web/app/plugins/listig \
-        app \
-        vendor/bin/phpunit
+    bin/install-wp-tests.sh wordpress_test wordpress secret mysql latest
+    vendor/bin/phpunit
 
   # Else, pass-thru args to docker-compose
   else
