@@ -46,10 +46,8 @@ if [ $# -gt 0 ]; then
         -w /var/www/html \
         app \
         composer create-project roots/bedrock .
-    cp -f docker/app/.env docker/bedrock/.env
 
-  elif [ "$1" == "install" ]; then
-    shift 1
+    cp -f docker/app/.env docker/bedrock/.env
 
     $COMPOSE run --rm $TTY \
         -w /var/www/html/web/app/plugins \
@@ -58,41 +56,45 @@ if [ $# -gt 0 ]; then
 
     rm -f project
 
-    #$COMPOSE run --rm $TTY \
-    #    -w /var/www/html \
-    #    app \
-    #    wp --allow-root db reset --yes
+    $COMPOSE run --rm $TTY \
+        -w /var/www/html \
+        app \
+        wp --allow-root db reset --yes
 
-    #$COMPOSE run --rm $TTY \
-    #    -w /var/www/html \
-    #    app \
-    #    wp --allow-root core install --url=localhost --title=Listig --admin_user=admin --admin_password=admin --admin_email=info@localhost.com
+    $COMPOSE run --rm $TTY \
+        -w /var/www/html \
+        app \
+        wp --allow-root core install --url=localhost --title=Listig --admin_user=admin --admin_password=admin --admin_email=info@localhost.com
 
-    #$COMPOSE run --rm $TTY \
-    #    -w /var/www/html \
-    #    app \
-    #    curl -O https://wpcom-themes.svn.automattic.com/demo/theme-unit-test-data.xml
+    $COMPOSE run --rm $TTY \
+        -w /var/www/html \
+        app \
+        curl -O https://wpcom-themes.svn.automattic.com/demo/theme-unit-test-data.xml
 
     $COMPOSE run --rm $TTY \
         -w /var/www/html \
         app \
         wp --allow-root plugin install wordpress-importer --activate
 
-    #$COMPOSE run --rm $TTY \
-    #    -w /var/www/html \
-    #    app \
-    #    wp --allow-root import ./theme-unit-test-data.xml --authors=create
+    $COMPOSE run --rm $TTY \
+        -w /var/www/html \
+        app \
+        wp --allow-root import ./theme-unit-test-data.xml --authors=create
 
-    #$COMPOSE run --rm $TTY \
-    #    -w /var/www/html \
-    #    app \
-    #    rm theme-unit-test-data.xml
+    $COMPOSE run --rm $TTY \
+        -w /var/www/html \
+        app \
+        rm theme-unit-test-data.xml
 
     $COMPOSE run --rm $TTY \
         -w /var/www/html \
         app \
         wp --allow-root plugin delete wordpress-importer
 
+    $COMPOSE run --rm $TTY \
+        -w /var/www/html \
+        app \
+        wp --allow-root plugin activate listig
 
   # Else, pass-thru args to docker-compose
   else

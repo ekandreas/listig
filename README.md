@@ -18,6 +18,8 @@ Dockerize development and going towards Gutenberg
 
 If you want to run wp-cli commands in the container, eg: `./docker/develop wp help`
 
+Login to WordPress via `http://localhost/wp/wp-admin` with username `admin` and password `admin`.
+
 ## Frontend
 Listig uses laravel-mix as a webpack wrapper.
 
