@@ -47,6 +47,11 @@ if [ $# -gt 0 ]; then
         app \
         composer create-project roots/bedrock .
 
+    $COMPOSE run --rm $TTY \
+        -w /var/www/html \
+        app \
+        composer update
+
     cp -f docker/app/.env docker/bedrock/.env
 
     $COMPOSE run --rm $TTY \
