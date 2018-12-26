@@ -4,7 +4,7 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-    image: joepurdy/dockpress
+    image: ekandreas/listig
     volumes:
     - ./..:/var/www/project
     - ./bedrock:/var/www/html
